@@ -1,6 +1,14 @@
 # Tripwire
 
-**Bait keys for builders on QIE.** Leave a fake private key where a real one could leak. When a thief or a sweeper bot uses it, your real vault locks, the thief is flagged for every app on QIE, and you learn exactly which file leaked.
+**A crypto wallet with a burglar alarm.**
+
+Tripwire gives you fake keys to hide where real keys get stolen: your code, your notes, your laptop. If anyone uses one, your wallet locks itself before they can reach your money, the thief is blocklisted across QIE, and you see exactly where you leaked.
+
+1. **Hide fake keys** where real keys leak.
+2. **A thief uses one**: a bot scanning GitHub, or a hacker on your laptop.
+3. **Your wallet locks**: in the same second, your money is frozen, the thief is blocklisted, you're told which file leaked.
+
+*Leave a key. Catch the thief.*
 
 [![CI](https://github.com/tomcode1000/tripwire-qie/actions/workflows/ci.yml/badge.svg)](https://github.com/tomcode1000/tripwire-qie/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/tomcode1000/tripwire-qie/actions/workflows/codeql.yml/badge.svg)](https://github.com/tomcode1000/tripwire-qie/actions/workflows/codeql.yml)

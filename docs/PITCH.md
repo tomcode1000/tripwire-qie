@@ -3,14 +3,30 @@
 Every page, the README, the video and every post use these words. Plain language first; the technical
 term only where a builder needs it, and explained the first time.
 
-## One line
+## What it is (always first, before any hook)
 
-**Tripwire hides fake keys next to your real ones. The moment someone uses one, your money locks, the
-thief is blocklisted, and you know exactly which file leaked.**
+**Tripwire is a crypto wallet with a burglar alarm.**
 
-## The hook
+A judge, a user or an investor must be able to repeat that back after one read. Say it before anything clever.
+
+## One line (what it does)
+
+**Tripwire gives you fake keys to hide where real keys get stolen. If anyone uses one, your wallet locks
+itself before they can reach your money, the thief is blocklisted across QIE, and you see exactly where you leaked.**
+
+## In 10 seconds (three steps, always in this order)
+
+1. **Hide fake keys** where real keys leak: your code, your notes, your laptop.
+2. **A thief uses one**: a bot scanning GitHub, or a hacker on your laptop.
+3. **Your wallet locks**: in the same second, your money is frozen, the thief is blocklisted, you're told which file leaked.
+
+## The tagline (the hook, after the plain statement)
 
 **Leave a key. Catch the thief.**
+
+## Order of a pitch
+
+What it is → what it does → the 3 steps → the proof number → the hook. Never open with the hook alone.
 
 ## The relatable moment (open with this)
 
@@ -49,7 +65,8 @@ A bot grabs the fake key first, and that is your warning, while your real key is
 | backup key | recovery address | it is the key you keep offline |
 | everyday key | owner key, hot key | the one you deploy with |
 | a bot or a thief | adversary, attacker | concrete |
-| set a trap | arm a trap, deploy a trap | natural English |
+| set your alarm, set a trap | arm a trap, deploy a trap | natural English |
+| wallet | vault contract | it holds your money; that's a wallet |
 | proof | assurance | plain |
 | catch | trip event | it's a catch |
 
