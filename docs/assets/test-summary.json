@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-11-27T15:12:04.169Z",
+  "tests": 54,
+  "passing": 54,
+  "failing": 0,
+  "pending": 0,
+  "durationMs": 8656,
+  "coverage": {
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 94.29
+  },
+  "schemaVersion": 1,
+  "label": "tests",
+  "message": "54 passing",
+  "color": "brightgreen"
+}

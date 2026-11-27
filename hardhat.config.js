@@ -6,6 +6,7 @@ const accounts = process.env.DEPLOYER_KEY ? [process.env.DEPLOYER_KEY] : [];
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
+  mocha: { reporter: process.env.MOCHA_REPORTER || "spec" },
   solidity: {
     version: "0.8.24",
     settings: {
