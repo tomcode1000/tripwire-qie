@@ -1,0 +1,49 @@
+{
+  "window": {
+    "from": "2026-11-27T07:13:02.000000Z",
+    "to": "2026-11-27T14:39:36.000000Z"
+  },
+  "transactions": 600,
+  "unique_senders": 32,
+  "top_sender": {
+    "address": "0xC111e7B1ce58bF342dcaFd622D40949f0b3d3792",
+    "tx": 352,
+    "share": 0.587
+  },
+  "top_contracts": [
+    [
+      "BROQPrediction",
+      176
+    ],
+    [
+      "SimplePushOracle",
+      176
+    ],
+    [
+      "0x725Ccc2C1C86c9BC31A90020128D99Ff8D351aA0",
+      76
+    ],
+    [
+      "Footfall",
+      40
+    ],
+    [
+      "0x153c1879C87b4130D4f0746A848133c3acF18eEB",
+      29
+    ],
+    [
+      "QUSDC",
+      28
+    ],
+    [
+      "Qiedex-LP",
+      15
+    ],
+    [
+      "ThesisCalls",
+      9
+    ]
+  ],
+  "gas_price_wei": 1125000000,
+  "simple_transfer_cost_qie": 2.3625e-05
+}
