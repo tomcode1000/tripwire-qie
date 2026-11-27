@@ -79,8 +79,8 @@
 
   async function createVault() {
     const rec = $("#recovery").value.trim();
-    if (!isAddr(rec)) return log("Enter a valid recovery address.", "err");
-    if (rec.toLowerCase() === S.account.toLowerCase()) return log("Recovery must be a different key from your everyday wallet.", "err");
+    if (!isAddr(rec)) return log("Enter a valid backup key address.", "err");
+    if (rec.toLowerCase() === S.account.toLowerCase()) return log("Your backup key must be a different wallet from the one you connected.", "err");
     try {
       const f = new ethers.Contract(D.contracts.TripwireFactory, FACTORY_ABI, S.signer);
       const tx = await f.createVault(rec, BigInt($("#delay").value));
@@ -125,7 +125,7 @@
     $("#baits").innerHTML = S.baits
       .map(
         (b, i) => `<div class="bait-item"><span class="mono fine">${b.wallet.address}</span>
-        <input class="input" data-i="${i}" value="${b.label}" placeholder="where you will plant it, e.g. github:repo/.env" maxlength="31">
+        <input class="input" data-i="${i}" value="${b.label}" placeholder="where you will hide it, e.g. github:repo/.env" maxlength="31">
         <button class="btn btn-ghost" data-rm="${i}" type="button" aria-label="Remove bait">Remove</button></div>`
       )
       .join("");
@@ -145,7 +145,7 @@
       a.click();
       URL.revokeObjectURL(a.href);
     });
-    log(`Downloaded ${S.baits.length} bait file${S.baits.length > 1 ? "s" : ""}. Plant each where its label says.`, "ok");
+    log(`Downloaded ${S.baits.length} fake key${S.baits.length > 1 ? "s" : ""}. Hide each one where its label says.`, "ok");
   }
 
   async function refreshArmButtons() {
@@ -156,7 +156,7 @@
     }
     $("#arm").disabled = !(ready && isRecovery && !S.trap);
     $("#guard").disabled = !(S.trap && isRecovery);
-    if (ready && !isRecovery && !S.trap) pill("#arm-state", "Switch to recovery account", "");
+    if (ready && !isRecovery && !S.trap) pill("#arm-state", "Switch to your backup key", "");
   }
 
   async function arm() {
@@ -164,12 +164,12 @@
       const f = new ethers.Contract(D.contracts.TripwireFactory, FACTORY_ABI, S.signer);
       const labels = S.baits.map((b) => ethers.encodeBytes32String(b.label.trim()));
       const tx = await f.arm(S.vault, ethers.ZeroAddress, S.baits.map((b) => b.wallet.address), labels);
-      log("Arming trap…", "", tx.hash);
+      log("Setting the trap…", "", tx.hash);
       const r = await tx.wait();
       const ev = r.logs.map((l) => { try { return f.interface.parseLog(l); } catch { return null; } }).find((x) => x?.name === "Armed");
       S.trap = ev.args.trap;
-      pill("#arm-state", "Armed, needs guardian", "");
-      log(`Trap armed ${TW.short(S.trap)}`, "ok", tx.hash);
+      pill("#arm-state", "Set, one step left", "");
+      log(`Trap set ${TW.short(S.trap)}`, "ok", tx.hash);
       refreshArmButtons();
       watch();
     } catch (e) {
@@ -181,10 +181,10 @@
     try {
       const v = new ethers.Contract(S.vault, VAULT_ABI, S.signer);
       const tx = await v.setGuardian(S.trap, true);
-      log("Making the trap a guardian…", "", tx.hash);
+      log("Letting the trap lock your vault…", "", tx.hash);
       await tx.wait();
-      pill("#arm-state", "Armed", "good");
-      log("Trap can now lock your vault", "ok", tx.hash);
+      pill("#arm-state", "Set", "good");
+      log("Done. The trap can now lock your vault", "ok", tx.hash);
       step(5);
       watch();
     } catch (e) {
@@ -201,13 +201,13 @@
       const t = new ethers.Contract(S.trap, TRAP_ABI, p);
       const [locked, reason, guardian, trips, baits] = await Promise.all([v.locked(), v.lockReason(), v.isGuardian(S.trap), t.tripCount(), t.baitCount()]);
       $("#status").innerHTML = `
-        <div class="r-row"><span>Trap</span><b><a class="mono" href="${TW.addr(S.trap)}" target="_blank" rel="noopener">${S.trap}</a></b></div>
-        <div class="r-row"><span>Vault</span><b><a class="mono" href="${TW.addr(S.vault)}" target="_blank" rel="noopener">${S.vault}</a></b></div>
-        <div class="r-row"><span>Bait keys armed</span><b>${baits}</b></div>
-        <div class="r-row"><span>Trap can lock vault</span><b class="${guardian ? "safe" : "flag"}">${guardian ? "Yes" : "No: complete step 4"}</b></div>
-        <div class="r-row"><span>Trips</span><b class="${trips > 0n ? "flag" : ""}">${trips}</b></div>
-        <div class="r-row"><span>Vault</span><b class="${locked ? "flag" : "safe"}">${locked ? `Locked: leak at ${ethers.decodeBytes32String(reason)}` : "Open, nothing tripped"}</b></div>`;
-      pill("#watch-state", locked ? "Tripped" : "Watching", locked ? "bad" : "good");
+        <div class="row"><span>Trap</span><b><a class="mono" href="${TW.addr(S.trap)}" target="_blank" rel="noopener">${S.trap}</a></b></div>
+        <div class="row"><span>Vault</span><b><a class="mono" href="${TW.addr(S.vault)}" target="_blank" rel="noopener">${S.vault}</a></b></div>
+        <div class="row"><span>Fake keys set</span><b>${baits}</b></div>
+        <div class="row"><span>Trap can lock your vault</span><b class="${guardian ? "safe" : "flag"}">${guardian ? "Yes" : "No, finish step 4"}</b></div>
+        <div class="row"><span>Catches</span><b class="${trips > 0n ? "flag" : ""}">${trips}</b></div>
+        <div class="row"><span>Vault</span><b class="${locked ? "flag" : "safe"}">${locked ? `Locked. You leaked at ${ethers.decodeBytes32String(reason)}` : "Open, nothing caught"}</b></div>`;
+      pill("#watch-state", locked ? "Caught" : "Watching", locked ? "bad" : "good");
     } catch (e) {
       log(`Status read failed: ${e.message}`, "err");
     }

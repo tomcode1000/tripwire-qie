@@ -3,104 +3,93 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Evidence · Tripwire</title>
-<meta name="description" content="Tests, live QIE testnet records and the attack evaluation behind every Tripwire claim.">
+<title>Proof · Tripwire</title>
+<meta name="description" content="How Tripwire was tested: 50 simulated thefts, two real catches on QIE testnet and 65 automated tests, every result linked to its record.">
+<script>try{const t=localStorage.getItem("tripwire-theme");if(t)document.documentElement.dataset.theme=t}catch{}</script>
 <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap">
 <link rel="stylesheet" href="assets/tripwire.css">
 </head>
 <body data-page="evidence.html">
 <div data-chrome="head"></div>
 
 <main>
-  <section class="shell" style="padding-top:56px">
-    <span class="kicker">Evidence</span>
-    <h1 class="h-display">Every claim, and where to check it</h1>
-    <p class="section-lede">Three kinds of proof: automated tests that run on every push, real transactions on QIE testnet, and an attack evaluation you can rerun. Every figure below links to its record in the repository.</p>
-    <div class="stats" style="margin-top:32px">
-      <div class="stat stat-good"><b data-k="tests.passing">—</b><span>Tests passing, <span data-k="tests.failing">0</span> failing</span><a data-href="src:tests.source" href="#">Full test output ↗</a></div>
-      <div class="stat"><b><span data-k="tests.coverage.lines">—</span><small>%</small></b><span>Line coverage (<span data-k="tests.coverage.branches">—</span>% of branches)</span><a href="https://github.com/tomcode1000/tripwire-qie/actions" target="_blank" rel="noopener">CI runs ↗</a></div>
-      <div class="stat"><b>2</b><span>Live trips recorded on QIE testnet</span><a href="#live">Records below ↓</a></div>
-      <div class="stat"><b data-k="eval.runs">—</b><span>Simulated thefts in the evaluation</span><a data-href="src:eval.source" href="#">Method ↗</a></div>
+  <div class="shell">
+    <header class="page-head" style="border-bottom:0;padding-bottom:40px">
+      <span class="eyebrow" style="font-family:var(--mono);font-weight:500;letter-spacing:.06em;color:var(--ink-2)">PROOF</span>
+      <h1 class="display" style="margin-top:14px">Don't take our word for it.</h1>
+      <p class="lede">We attacked our own system 50 times, caught two thieves on QIE testnet, and wrote <span data-k="tests.passing">65</span> automated tests that run every time the code changes. Every number below links to the record it came from.</p>
+    </header>
+    <div class="figbox">
+      <div class="bad"><b data-k="eval.plainStolen">—</b><span>QIE stolen from normal wallets</span></div>
+      <div><b style="color:var(--good)" data-k="eval.tripwireStolenReact">—</b><span>QIE stolen with Tripwire</span></div>
+      <div><b><span data-k="tests.passing">—</span></b><span>Automated tests passing</span><a data-href="src:tests.source" href="#">Full output</a></div>
+      <div><b><span data-k="tests.coverage.lines">—</span>%</b><span>Of the code covered by tests</span><a href="https://github.com/tomcode1000/tripwire-qie/actions" target="_blank" rel="noopener">CI runs</a></div>
     </div>
-  </section>
+  </div>
 
-  <section class="section fade" id="eval">
-    <div class="shell">
-      <div class="section-head">
-        <span class="kicker">Attack evaluation</span>
-        <h2 class="h-display">Same keys, plain wallet vs Tripwire</h2>
-        <p class="section-lede">Each run puts 10 QIE in the builder's vault and gives a thief the keys below. A thief with the everyday key tries everything: withdraw all, withdraw the daily limit, raise the limit, remove the trap, queue a full drain and execute it after 24 hours. Seed <span class="mono" data-k="eval.seed">—</span>.</p>
-      </div>
-      <div class="table-wrap">
-        <table class="t">
-          <thead><tr><th>Thief has</th><th class="r">Runs</th><th class="r">Caught</th><th class="r">Stolen, plain wallet</th><th class="r">Stolen, Tripwire<br><span style="text-transform:none;letter-spacing:0;font-weight:500">builder never checks</span></th><th class="r">Stolen, Tripwire<br><span style="text-transform:none;letter-spacing:0;font-weight:500">builder checks once</span></th></tr></thead>
-          <tbody id="eval-rows"></tbody>
-          <tfoot><tr><td>Total</td><td class="r" data-k="eval.runs"></td><td class="r"><span data-k="eval.caught"></span> / <span data-k="eval.baitAttacks"></span></td><td class="r bad"><span data-k="eval.plainStolen"></span> QIE</td><td class="r"><span data-k="eval.tripwireStolenWorst"></span> QIE</td><td class="r good"><span data-k="eval.tripwireStolenReact"></span> QIE</td></tr></tfoot>
-        </table>
-      </div>
-      <p class="fine" style="margin-top:14px"><b data-k="eval.innocentFlagged">0</b> innocent addresses flagged across all runs. The last row is the honest limit: with no bait touched, only the 24-hour delay protects. Raw per-run records: <a data-href="src:eval.rawWorst" href="#">never checks</a>, <a data-href="src:eval.rawReact" href="#">checks once</a>.</p>
-    </div>
-  </section>
-
-  <section class="section fade" id="live">
-    <div class="shell">
-      <div class="section-head">
-        <span class="kicker">Live on QIE testnet</span>
-        <h2 class="h-display">Two real catches, recorded</h2>
-      </div>
-      <div class="compare">
-        <article class="panel receipt">
-          <div class="wire tripped"></div>
-          <div class="receipt-head"><span class="h3">Bait token trip</span><span class="pill pill-bad">Tripped</span></div>
-          <div class="receipt-rows">
-            <div class="r-row"><span>Bait planted in</span><b class="mono" data-k="liveTrip.lockReason"></b></div>
-            <div class="r-row"><span>Block</span><b data-k="liveTrip.block" data-fmt="int"></b></div>
-            <div class="r-row"><span>Bait balance</span><b><span data-k="liveTrip.baitBefore"></span> rUSD before and after</b></div>
-            <div class="r-row"><span>Thief received</span><b><span data-k="liveTrip.thiefReceived"></span> rUSD</b></div>
-            <div class="r-row"><span>Vault</span><b class="safe">Locked in the thief's transaction</b></div>
-            <div class="r-row"><span>Thief</span><b class="flag">Flagged</b></div>
-          </div>
-          <div class="receipt-foot"><a data-href="tx:liveTrip.tx" href="#">Transaction ↗</a><a data-href="addr:liveTrip.vault" href="#">Vault ↗</a><a data-href="src:liveTrip.source" href="#">Full record ↗</a></div>
-        </article>
-        <article class="panel receipt">
-          <div class="wire tripped"></div>
-          <div class="receipt-head"><span class="h3">Keeper catch: native-coin sweep</span><span class="pill pill-bad">Tripped</span></div>
-          <div class="receipt-rows">
-            <div class="r-row"><span>What happened</span><b>A bot used a leaked bait key to sweep its QIE</b></div>
-            <div class="r-row"><span>Reported in</span><b><span data-k="keeper.reportSeconds"></span> seconds</b></div>
-            <div class="r-row"><span>Thief</span><b><a class="mono" data-href="addr:keeper.thief" data-k="keeper.thief" data-fmt="short"></a> <span class="flag">flagged</span></b></div>
-            <div class="r-row"><span>Keeper powers</span><b>Lock and flag only; cannot move funds</b></div>
-          </div>
-          <div class="receipt-foot"><a data-href="tx:keeper.sweepTx" href="#">Sweep ↗</a><a data-href="tx:keeper.reportTx" href="#">Keeper report ↗</a><a data-href="src:keeper.source" href="#">Full record ↗</a></div>
-        </article>
+  <section class="sec fade" id="eval">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 01</span><span class="eyebrow">THE ATTACK TEST</span></div></aside>
+      <div>
+        <div class="sec-head">
+          <h2 class="h2">We robbed ourselves <span data-k="eval.runs">50</span> times.</h2>
+          <p class="lede">Each round put 10 QIE in a wallet and gave a thief some of the owner's keys. With the everyday key, the thief tried everything: take it all, take the daily limit, raise the limit, switch off the trap, queue a full withdrawal and wait 24 hours. Seed <span class="mono" data-k="eval.seed">—</span>, so anyone can rerun the exact same 50 rounds.</p>
+        </div>
+        <div class="ledger-wrap">
+          <table class="ledger">
+            <thead><tr><th>The thief had</th><th class="r">Rounds</th><th class="r">Caught</th><th class="r">Lost, normal wallet</th><th class="r">Lost, Tripwire<br><span style="text-transform:none;letter-spacing:0">owner never checks</span></th><th class="r">Lost, Tripwire<br><span style="text-transform:none;letter-spacing:0">owner checks once a day</span></th></tr></thead>
+            <tbody id="eval-rows"></tbody>
+            <tfoot><tr><td>All rounds</td><td class="r" data-k="eval.runs"></td><td class="r"><span data-k="eval.caught"></span> / <span data-k="eval.baitAttacks"></span></td><td class="r bad"><span data-k="eval.plainStolen"></span> QIE</td><td class="r"><span data-k="eval.tripwireStolenWorst"></span> QIE</td><td class="r good"><span data-k="eval.tripwireStolenReact"></span> QIE</td></tr></tfoot>
+          </table>
+        </div>
+        <p class="fine" style="margin-top:14px"><b data-k="eval.innocentFlagged">0</b> innocent addresses blocklisted. The last row is the honest limit: when no bait is touched, only the 24-hour wait protects you. Every round, step by step: <a class="u" data-href="src:eval.rawWorst" href="#">owner never checks</a>, <a class="u" data-href="src:eval.rawReact" href="#">owner checks once a day</a>, <a class="u" data-href="src:eval.source" href="#">method</a>.</p>
       </div>
     </div>
   </section>
 
-  <section class="section fade" id="tests">
-    <div class="shell">
-      <div class="section-head">
-        <span class="kicker">Tests</span>
-        <h2 class="h-display">What the tests prove</h2>
-        <p class="section-lede">Run <span class="mono">npx hardhat test</span>. Each line below is a test name in the repository.</p>
+  <section class="sec fade" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 02</span><span class="eyebrow">REAL CATCHES</span></div></aside>
+      <div>
+        <div class="sec-head"><h2 class="h2">Two thieves caught on QIE testnet.</h2>
+          <p class="lede">Our own end-to-end tests on the real chain. Both are written up in full on the <a class="u" href="incident.html">Incidents</a> page.</p></div>
+        <div class="ledger-wrap">
+          <table class="ledger">
+            <thead><tr><th>Case</th><th>What happened</th><th>Result</th><th>Record</th></tr></thead>
+            <tbody>
+              <tr><td class="mono"><a href="incident.html#tw-0001">TW-0001</a></td><td>A fake key was used to grab 500 rUSD</td><td>Thief got 0 · funds locked · thief blocklisted</td><td><a data-href="tx:liveTrip.tx" href="#">Transaction ↗</a></td></tr>
+              <tr><td class="mono"><a href="incident.html#tw-0002">TW-0002</a></td><td>A bot swept a bait wallet's QIE</td><td>Blocklisted <span data-k="keeper.reportSeconds"></span> s later by the watcher</td><td><a data-href="tx:keeper.reportTx" href="#">Report ↗</a></td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="table-wrap">
-        <table class="t">
-          <thead><tr><th>Claim</th><th>Test</th></tr></thead>
-          <tbody>
-            <tr><td>Moving bait does not move it, does not revert, and trips the trap</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/BaitToken.test.js" target="_blank" rel="noopener">BaitToken</a> · transfer() does not revert…</td></tr>
-            <tr><td>The drainer pattern (approve a sweeper, then pull) trips at both steps</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/SweeperBot.test.js" target="_blank" rel="noopener">SweeperBot</a> · step 1, step 2</td></tr>
-            <tr><td>A trip locks the vault with the leak's location as the reason</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/Trap.test.js" target="_blank" rel="noopener">Trap</a> · records the trip and locks the vault…</td></tr>
-            <tr><td>A thief with the everyday key cannot drain or weaken the vault</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/TripwireVault.test.js" target="_blank" rel="noopener">TripwireVault</a> · the thief scenario</td></tr>
-            <tr><td>Native sweeps are reported by the keeper, once, and only by the real keeper</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/Keeper.test.js" target="_blank" rel="noopener">Keeper</a></td></tr>
-            <tr><td>Only traps can flag; unknown bait cannot frame an innocent address</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/FlagRegistry.test.js" target="_blank" rel="noopener">FlagRegistry</a>, <a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/Trap.test.js" target="_blank" rel="noopener">Trap</a></td></tr>
-          </tbody>
-        </table>
+    </div>
+  </section>
+
+  <section class="sec fade" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 03</span><span class="eyebrow">AUTOMATED TESTS</span></div></aside>
+      <div>
+        <div class="sec-head"><h2 class="h2">What the tests prove, in plain words.</h2>
+          <p class="lede">Run <span class="mono">npx hardhat test</span> to see them pass. Each row names the test file that proves it.</p></div>
+        <div class="ledger-wrap">
+          <table class="ledger">
+            <thead><tr><th>Promise</th><th>Proved by</th></tr></thead>
+            <tbody>
+              <tr><td>The fake balance never leaves a bait wallet, however it's moved</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/BaitToken.test.js" target="_blank" rel="noopener">BaitToken tests</a></td></tr>
+              <tr><td>The way real drainer bots work (approve, then sweep) is caught at both steps</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/SweeperBot.test.js" target="_blank" rel="noopener">SweeperBot tests</a></td></tr>
+              <tr><td>A catch locks your funds and records which file leaked</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/Trap.test.js" target="_blank" rel="noopener">Trap tests</a></td></tr>
+              <tr><td>A thief with your everyday key can't drain your vault or change its rules</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/TripwireVault.test.js" target="_blank" rel="noopener">Vault tests</a></td></tr>
+              <tr><td>Bots that sweep a bait wallet's QIE are caught by the watcher, once</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/Keeper.test.js" target="_blank" rel="noopener">Watcher tests</a></td></tr>
+              <tr><td>Nobody can add an innocent address to the blocklist</td><td><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/test/FlagRegistry.test.js" target="_blank" rel="noopener">Blocklist tests</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fine" style="margin-top:14px">Every claim on this site, mapped to its proof: <a class="u" data-href="src:tests.evidence" href="#">EVIDENCE.md</a> · sources: <a class="u" href="https://github.com/tomcode1000/tripwire-qie/blob/main/docs/REFERENCES.md" target="_blank" rel="noopener">REFERENCES.md</a></p>
       </div>
-      <p class="fine" style="margin-top:14px">The complete mapping, with references for every external fact: <a data-href="src:tests.evidence" href="#">EVIDENCE.md</a> · <a href="https://github.com/tomcode1000/tripwire-qie/blob/main/docs/REFERENCES.md" target="_blank" rel="noopener">REFERENCES.md</a></p>
     </div>
   </section>
 </main>
@@ -110,20 +99,18 @@
 <script src="assets/site.js"></script>
 <script>
   document.addEventListener("tw:data", (e) => {
-    const d = e.detail;
     const NAMES = {
-      "bait-transfer + owner drain": "Bait key (moves bait) + everyday key",
-      "bait-approve-sweeper + owner drain": "Bait key (approves a sweeper bot) + everyday key",
-      "native sweep of bait (keeper) + owner drain": "Bait key (sweeps native QIE) + everyday key",
-      "bait-transfer only": "Bait key only",
-      "owner key only, bait untouched": "Everyday key only, bait untouched",
+      "bait-transfer + owner drain": "A fake key (moves the bait) + your everyday key",
+      "bait-approve-sweeper + owner drain": "A fake key (hands it to a drainer bot) + your everyday key",
+      "native sweep of bait (keeper) + owner drain": "A fake key (sweeps its QIE) + your everyday key",
+      "bait-transfer only": "A fake key only",
+      "owner key only, bait untouched": "Your everyday key only, bait never touched",
     };
-    document.getElementById("eval-rows").innerHTML = d.eval.byStrategy
-      .map(
-        (s) => `<tr><td>${NAMES[s.name] || s.name}</td><td class="r">${s.runs}</td><td class="r">${s.name.startsWith("owner key only") ? "n/a" : `${s.caught} / ${s.runs}`}</td>
-        <td class="r ${s.plain ? "bad" : ""}">${s.plain} QIE</td><td class="r">${s.worst} QIE</td><td class="r ${s.react < s.plain ? "good" : ""}">${s.react} QIE</td></tr>`
-      )
-      .join("");
+    document.getElementById("eval-rows").innerHTML = e.detail.eval.byStrategy.map((s) => `<tr>
+      <td>${NAMES[s.name] || s.name}</td><td class="r">${s.runs}</td>
+      <td class="r">${s.name.startsWith("owner key only") ? "n/a" : `${s.caught} / ${s.runs}`}</td>
+      <td class="r ${s.plain ? "bad" : ""}">${s.plain} QIE</td><td class="r">${s.worst} QIE</td>
+      <td class="r ${s.react < s.plain ? "good" : ""}">${s.react} QIE</td></tr>`).join("");
   });
 </script>
 </body>
