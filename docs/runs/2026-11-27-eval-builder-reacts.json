@@ -1,0 +1,1008 @@
+{
+  "ranAt": "2026-11-27T15:49:43.884Z",
+  "runs": 50,
+  "seed": 20261127,
+  "fundsPerRunQIE": 10,
+  "dailyLimitQIE": 0.5,
+  "delayHours": 24,
+  "builderReaction": "checks once within the 24h delay and cancels unknown withdrawals",
+  "totals": {
+    "attacksTouchingBait": 39,
+    "detected": 39,
+    "innocentAddressesFlagged": 0,
+    "stolenWithTripwireQIE": 13.5,
+    "stolenFromPlainWalletQIE": 400
+  },
+  "byStrategy": {
+    "bait-transfer + owner drain": {
+      "runs": 16,
+      "detected": 16,
+      "locked": 16,
+      "attackerFlagged": 16,
+      "innocentFlagged": 0,
+      "stolenQIE": 4,
+      "plainWalletStolenQIE": 160
+    },
+    "bait-approve-sweeper + owner drain": {
+      "runs": 6,
+      "detected": 6,
+      "locked": 6,
+      "attackerFlagged": 6,
+      "innocentFlagged": 0,
+      "stolenQIE": 2,
+      "plainWalletStolenQIE": 60
+    },
+    "native sweep of bait (keeper) + owner drain": {
+      "runs": 7,
+      "detected": 7,
+      "locked": 7,
+      "attackerFlagged": 7,
+      "innocentFlagged": 0,
+      "stolenQIE": 2,
+      "plainWalletStolenQIE": 70
+    },
+    "bait-transfer only": {
+      "runs": 10,
+      "detected": 10,
+      "locked": 10,
+      "attackerFlagged": 10,
+      "innocentFlagged": 0,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 0
+    },
+    "owner key only, bait untouched": {
+      "runs": 11,
+      "detected": 0,
+      "locked": 0,
+      "attackerFlagged": 0,
+      "innocentFlagged": 0,
+      "stolenQIE": 5.5,
+      "plainWalletStolenQIE": 110
+    }
+  },
+  "results": [
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "bait.transfer",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-approve-sweeper + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "bait.approve+sweep",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "native sweep of bait (keeper) + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "native sweep -> keeper",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer only",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 0,
+      "steps": [
+        "bait.transfer"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "owner key only, bait untouched",
+      "baitFirst": true,
+      "detected": false,
+      "vaultLocked": false,
+      "attackerFlagged": false,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "owner key only, bait untouched",
+      "baitFirst": false,
+      "detected": false,
+      "vaultLocked": false,
+      "attackerFlagged": false,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "owner key only, bait untouched",
+      "baitFirst": true,
+      "detected": false,
+      "vaultLocked": false,
+      "attackerFlagged": false,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "native sweep of bait (keeper) + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "native sweep -> keeper",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer only",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 0,
+      "steps": [
+        "bait.transfer"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer only",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 0,
+      "steps": [
+        "bait.transfer"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "bait.transfer",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.transfer",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "owner key only, bait untouched",
+      "baitFirst": true,
+      "detected": false,
+      "vaultLocked": false,
+      "attackerFlagged": false,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-approve-sweeper + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.approve+sweep",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "bait.transfer",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.transfer",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.transfer",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "owner key only, bait untouched",
+      "baitFirst": true,
+      "detected": false,
+      "vaultLocked": false,
+      "attackerFlagged": false,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "bait.transfer",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.transfer",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "native sweep of bait (keeper) + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "native sweep -> keeper",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "native sweep of bait (keeper) + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "native sweep -> keeper",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "bait.transfer",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-approve-sweeper + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.approve+sweep",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.transfer",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.transfer",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "owner key only, bait untouched",
+      "baitFirst": true,
+      "detected": false,
+      "vaultLocked": false,
+      "attackerFlagged": false,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-approve-sweeper + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "bait.approve+sweep",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer only",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 0,
+      "steps": [
+        "bait.transfer"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer only",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 0,
+      "steps": [
+        "bait.transfer"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "native sweep of bait (keeper) + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "native sweep -> keeper",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "owner key only, bait untouched",
+      "baitFirst": true,
+      "detected": false,
+      "vaultLocked": false,
+      "attackerFlagged": false,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer only",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 0,
+      "steps": [
+        "bait.transfer"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer only",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 0,
+      "steps": [
+        "bait.transfer"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "owner key only, bait untouched",
+      "baitFirst": false,
+      "detected": false,
+      "vaultLocked": false,
+      "attackerFlagged": false,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "bait.transfer",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer only",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 0,
+      "steps": [
+        "bait.transfer"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "bait.transfer",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "native sweep of bait (keeper) + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "native sweep -> keeper",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "owner key only, bait untouched",
+      "baitFirst": true,
+      "detected": false,
+      "vaultLocked": false,
+      "attackerFlagged": false,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.transfer",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-approve-sweeper + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.approve+sweep",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "owner key only, bait untouched",
+      "baitFirst": false,
+      "detected": false,
+      "vaultLocked": false,
+      "attackerFlagged": false,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer only",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 0,
+      "steps": [
+        "bait.transfer"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-approve-sweeper + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.approve+sweep",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "bait.transfer",
+        "withdraw(all):blocked",
+        "withdraw(daily):blocked",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "owner key only, bait untouched",
+      "baitFirst": true,
+      "detected": false,
+      "vaultLocked": false,
+      "attackerFlagged": false,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "bait.transfer",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "bait-transfer only",
+      "baitFirst": true,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0,
+      "plainWalletStolenQIE": 0,
+      "steps": [
+        "bait.transfer"
+      ],
+      "_unused": 3
+    },
+    {
+      "strategy": "native sweep of bait (keeper) + owner drain",
+      "baitFirst": false,
+      "detected": true,
+      "vaultLocked": true,
+      "attackerFlagged": true,
+      "innocentFlagged": false,
+      "stolenQIE": 0.5,
+      "plainWalletStolenQIE": 10,
+      "steps": [
+        "withdraw(all):blocked",
+        "withdraw(daily):ok",
+        "setDailyLimit:blocked",
+        "setGuardian(off):blocked",
+        "requestWithdraw(rest):ok",
+        "native sweep -> keeper",
+        "builder-cancel#0",
+        "execute#0:blocked"
+      ],
+      "_unused": 3
+    }
+  ]
+}
