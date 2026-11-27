@@ -1,0 +1,33 @@
+{
+  "network": "qieTestnet",
+  "ranAt": "2026-11-27T15:51:45.470Z",
+  "trap": "0x16bD3dB9862D01a512e1D62DCBfddce52f973765",
+  "keeper": "0xdf23A958311e16BafF3221f0BC9Ed365A7Ba310b",
+  "bait": "0x479CED53DeB47Acdb6cFF6CcDF5fA929CE1b12e8",
+  "thief": "0xAceaE5a7AACb9204fA767475909db518CeFF0928",
+  "before": {
+    "thief2Flagged": false,
+    "tripCount": 1
+  },
+  "after": {
+    "thief2Flagged": true,
+    "tripCount": 2,
+    "lastTripViaToken": false
+  },
+  "sweepTx": "0x52c580772aebdab1ba5f951fdf298fb5fa689f08c0ff78038f6494c448f2124e",
+  "reports": [
+    {
+      "bait": "0x479CED53DeB47Acdb6cFF6CcDF5fA929CE1b12e8",
+      "taker": "0xAceaE5a7AACb9204fA767475909db518CeFF0928",
+      "sweepTx": "0x52c580772aebdab1ba5f951fdf298fb5fa689f08c0ff78038f6494c448f2124e",
+      "reportTx": "0xba110156b50b8eac76b8b3839920ee35eb5a47b79f26c2f02dc67e978d6dacaa",
+      "block": 10007762
+    }
+  ],
+  "keeperReportMs": 7702,
+  "txs": {
+    "setKeeper": "0xec5e2c32dd7f981e36d8a110caa31e31ffe2d912cd721845f2e409f27a56f71e",
+    "fundBait2": "0x00087753acb0c2ab1c4392eea4a62bf21611b4ef3404e216c1e2a05b14b8ce26",
+    "botSweep": "0x52c580772aebdab1ba5f951fdf298fb5fa689f08c0ff78038f6494c448f2124e"
+  }
+}
