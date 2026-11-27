@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arm a trap · Tripwire</title>
+<meta name="description" content="Create a Tripwire vault, generate bait keys in your browser and arm a trap on QIE.">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/tripwire.css">
+</head>
+<body data-page="arm.html">
+<div data-chrome="head"></div>
+
+<main class="shell app">
+  <nav class="app-nav" aria-label="Steps">
+    <a href="#s1" id="n1" class="on"><span class="steps-n">01</span>Connect</a>
+    <a href="#s2" id="n2"><span class="steps-n">02</span>Vault</a>
+    <a href="#s3" id="n3"><span class="steps-n">03</span>Bait keys</a>
+    <a href="#s4" id="n4"><span class="steps-n">04</span>Arm</a>
+    <a href="#s5" id="n5"><span class="steps-n">05</span>Watch</a>
+    <p class="fine" style="padding:14px 12px 0">QIE testnet (chain 1983). Test QIE from the <a href="https://www.qie.digital/faucet" target="_blank" rel="noopener">faucet</a>. Not audited.</p>
+  </nav>
+
+  <div class="app-main">
+    <section class="panel step-card" id="s1">
+      <header><h2 class="h3">1 · Connect your everyday wallet</h2><span id="who" class="pill">Not connected</span></header>
+      <p class="section-lede">This is the key you deploy with: the one that could leak. It will own the vault. Works with QIE Wallet or any EIP-1193 wallet.</p>
+      <div class="row-actions"><button class="btn btn-primary" id="connect">Connect wallet</button></div>
+    </section>
+
+    <section class="panel step-card" id="s2">
+      <header><h2 class="h3">2 · Create your vault</h2><span id="vault-state" class="pill">No vault</span></header>
+      <p class="section-lede">Real funds live here. The recovery address is your cold key: it controls every setting, receives any rescue, and signs step 4. Use a different wallet from the one connected.</p>
+      <div class="field"><label for="recovery">Recovery address (cold key)</label><input class="input" id="recovery" placeholder="0x…" spellcheck="false" autocomplete="off"><span class="hint">Never the same as your everyday key.</span></div>
+      <div class="field"><label for="delay">Delay on large withdrawals</label>
+        <select class="input" id="delay" style="font-family:var(--sans)"><option value="86400" selected>24 hours (recommended)</option><option value="43200">12 hours</option><option value="172800">48 hours</option></select></div>
+      <div class="field"><label for="existing">Or use an existing vault</label><input class="input" id="existing" placeholder="0x… vault address (optional)" spellcheck="false" autocomplete="off"></div>
+      <div class="row-actions"><button class="btn btn-primary" id="create-vault" disabled>Create vault</button><button class="btn btn-ghost" id="use-vault" disabled>Use existing</button></div>
+    </section>
+
+    <section class="panel step-card" id="s3">
+      <header><h2 class="h3">3 · Generate bait keys</h2><span id="bait-state" class="pill">None yet</span></header>
+      <p class="section-lede">Bait keys are made in this browser and never sent anywhere. Label each with where you will plant it; the label is what the alarm tells you.</p>
+      <div class="bait-list" id="baits"></div>
+      <div class="row-actions"><button class="btn btn-ghost" id="add-bait">Add bait key</button><button class="btn btn-ghost" id="download" disabled>Download bait files</button></div>
+      <p class="fine" style="margin-top:12px">Each file looks like a real <span class="mono">.env</span> with a deploy key. Plant it, commit it, paste it: that is the point. Keep no real value in a bait wallet.</p>
+    </section>
+
+    <section class="panel step-card" id="s4">
+      <header><h2 class="h3">4 · Arm the trap</h2><span id="arm-state" class="pill">Not armed</span></header>
+      <p class="section-lede">Switch your wallet to the <b>recovery</b> account, then arm. Two transactions: the factory deploys your trap and gives each bait wallet 500 rUSD, then the vault accepts the trap as a guardian.</p>
+      <div class="row-actions"><button class="btn btn-primary" id="arm" disabled>Arm trap</button><button class="btn btn-ghost" id="guard" disabled>Make trap a guardian</button></div>
+    </section>
+
+    <section class="panel step-card" id="s5">
+      <header><h2 class="h3">5 · Watch</h2><span id="watch-state" class="pill">Waiting</span></header>
+      <p class="section-lede">Your trap's status, read from QIE. If a bait key is used, the vault locks and this card names the file that leaked.</p>
+      <div class="receipt-rows" id="status" style="padding:6px 0 0"><div class="r-row"><span>Trap</span><b class="fine">Not armed yet</b></div></div>
+    </section>
+
+    <section class="panel step-card">
+      <h2 class="h3">Activity</h2>
+      <div class="log" id="log"><div class="fine">Nothing yet.</div></div>
+    </section>
+  </div>
+</main>
+
+<div data-chrome="foot"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/arm.js"></script>
+</body>
+</html>
