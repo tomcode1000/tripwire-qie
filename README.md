@@ -5,7 +5,7 @@
 [![CI](https://github.com/tomcode1000/tripwire-qie/actions/workflows/ci.yml/badge.svg)](https://github.com/tomcode1000/tripwire-qie/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/tomcode1000/tripwire-qie/actions/workflows/codeql.yml/badge.svg)](https://github.com/tomcode1000/tripwire-qie/actions/workflows/codeql.yml)
 [![Tests](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/tomcode1000/tripwire-qie/main/docs/assets/test-summary.json)](docs/assets/test-summary.json)
-![Coverage](https://img.shields.io/badge/line%20coverage-100%25-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-100%25%20lines%20%C2%B7%2094%25%20branches-brightgreen)
 ![QIE](https://img.shields.io/badge/QIE-Hackathon%203.0-8b5cf6)
 ![Track](https://img.shields.io/badge/track-Developer%20Infrastructure%20%26%20Tooling-0a7)
 
@@ -15,12 +15,16 @@ QIE Blockchain Hackathon 3.0 · Track: Developer Infrastructure & Tooling
 
 ## For judges
 
+**Full claim-by-claim proof: [`docs/EVIDENCE.md`](docs/EVIDENCE.md)** · attack evaluation: [`docs/EVAL.md`](docs/EVAL.md) · sources: [`docs/REFERENCES.md`](docs/REFERENCES.md)
+
 | Claim | Evidence |
 |---|---|
-| Moving or approving bait never moves it and always trips the trap | [`test/BaitToken.test.js`](test/BaitToken.test.js) |
+| **50 randomised thefts: 400 QIE stolen from plain wallets, 13.5 QIE with Tripwire** (118 if the builder never checks). Every bait attack caught (39/39), 0 innocent addresses flagged | [`docs/EVAL.md`](docs/EVAL.md) |
+| Moving or approving bait never moves it and always trips the trap, including the real drainer pattern (approve a sweeper, then pull) | [`test/BaitToken.test.js`](test/BaitToken.test.js), [`test/SweeperBot.test.js`](test/SweeperBot.test.js) |
 | A trip locks the vault, flags the taker and names the leaked file | [`test/Trap.test.js`](test/Trap.test.js) |
+| Bots that sweep native QIE are caught by the keeper | [`test/Keeper.test.js`](test/Keeper.test.js); **live on testnet:** [sweep](https://testnet.qie.digital/tx/0x52c580772aebdab1ba5f951fdf298fb5fa689f08c0ff78038f6494c448f2124e) → [keeper report](https://testnet.qie.digital/tx/0xba110156b50b8eac76b8b3839920ee35eb5a47b79f26c2f02dc67e978d6dacaa) about 7.7 s later ([record](docs/runs/2026-11-27-qieTestnet-keeper-sweep.json)) |
 | A thief holding the owner key cannot drain the vault or weaken its settings | [`test/TripwireVault.test.js`](test/TripwireVault.test.js) ("the thief scenario") |
-| 54 tests, 100% line coverage | [`docs/assets/test-summary.json`](docs/assets/test-summary.json), CI badge above |
+| 65 tests, 100% line / 94% branch coverage | [`docs/assets/test-summary.json`](docs/assets/test-summary.json), [`docs/assets/test-report.txt`](docs/assets/test-report.txt), CI badge above |
 | Leaked keys are drained in seconds; bait keys exist for cloud, not crypto | [`docs/REFERENCES.md`](docs/REFERENCES.md) |
 | QIE costs about $0.000004 per transfer, so planting bait is free | [`docs/runs/`](docs/runs/) (dated measurements) |
 | **Live trip on QIE testnet:** a stolen bait key moved bait, the vault locked with reason `github:demo-repo/.env`, the thief was flagged, and the bait never moved | [thief's tx](https://testnet.qie.digital/tx/0xb26388ac68e178d19b447b7496fffb1e9d7204be99520f9dc1af7f8235cd7a04), full record [`docs/runs/2026-11-27-qieTestnet-live-trip.json`](docs/runs/2026-11-27-qieTestnet-live-trip.json) |
@@ -58,7 +62,7 @@ Bots that sweep native QIE instead of tokens are handled by an optional **keeper
 
 ```bash
 npm ci --legacy-peer-deps
-npx hardhat test            # 54 tests
+npx hardhat test            # 65 tests
 npx hardhat coverage        # coverage report
 npm run test:summary        # writes docs/assets/test-summary.json
 npx hardhat run scripts/deploy.js   # local deploy, prints gas used
