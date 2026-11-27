@@ -1,7 +1,8 @@
-/* Tripwire site: shared chrome, theme, evidence data and live reads from QIE testnet. */
+/* Tripwire site: shared chrome, theme, live status band, evidence data and live reads from QIE. */
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const REPO = "https://github.com/tomcode1000/tripwire-qie";
 
   // ---------------------------------------------------------------- theme
   const THEME_KEY = "tripwire-theme";
@@ -9,59 +10,101 @@
     document.documentElement.dataset.theme = t;
     try { localStorage.setItem(THEME_KEY, t); } catch {}
   };
-  try { const t = localStorage.getItem(THEME_KEY); if (t) document.documentElement.dataset.theme = t; } catch {}
 
   // ---------------------------------------------------------------- chrome
-  const MARK = `<svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="9" fill="currentColor"/><path d="M6 23h9l3-7 4 14 3-7h9" fill="none" stroke="var(--surface)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-  const ICON = {
-    home: '<path d="M3 10.5 10 4l7 6.5V17a1 1 0 0 1-1 1h-4v-5H8v5H4a1 1 0 0 1-1-1z"/>',
-    list: '<path d="M7 5h10M7 10h10M7 15h10M3 5h.01M3 10h.01M3 15h.01"/>',
-    arm: '<path d="M10 2v4M10 14v4M2 10h4M14 10h4M10 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>',
-    proof: '<path d="M4 3h9l3 3v11H4zM8 10l2 2 4-4"/>',
-    docs: '<path d="M5 3h7l3 3v11H5zM8 9h5M8 12h5"/>',
-  };
-  const icon = (k) => `<svg class="i" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]}</svg>`;
+  const MARK = `<svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="8" fill="currentColor"/><path d="M7 25.5h26" stroke="var(--paper)" stroke-width="2" stroke-linecap="round"/><circle cx="13" cy="25.5" r="3.2" fill="var(--paper)"/><path d="M13 25.5 31 14" stroke="var(--paper)" stroke-width="1.4" stroke-linecap="round" opacity=".55"/></svg>`;
   const page = document.body.dataset.page;
   const nav = [
-    ["index.html", "home", "Overview"],
-    ["list.html", "list", "The list"],
-    ["arm.html", "arm", "Arm a trap"],
-    ["evidence.html", "proof", "Evidence"],
+    ["index.html", "Overview"],
+    ["incident.html", "Incidents"],
+    ["registry.html", "Blocklist"],
+    ["evidence.html", "Proof"],
+    ["arm.html", "Set a trap"],
   ];
   const head = $("[data-chrome=head]");
   if (head) {
-    head.outerHTML = `<header class="site-head"><div class="shell site-head-in">
+    const overHero = !!document.querySelector(".hero");
+    head.outerHTML = `<div class="masthead${overHero ? " over-hero" : ""}" id="masthead"><header class="site-head"><div class="shell site-head-in">
       <a class="brand" href="index.html"><span class="mark">${MARK}</span><span>Tripwire</span></a>
-      <nav class="site-links" aria-label="Main">${nav
-        .map(([h, i, t]) => `<a href="${h}"${page === h ? ' aria-current="page"' : ""}>${icon(i)}${t}</a>`)
-        .join("")}</nav>
+      <nav class="site-links" aria-label="Main">${nav.map(([h, t]) => `<a href="${h}"${page === h ? ' aria-current="page"' : ""}>${t}</a>`).join("")}</nav>
       <div class="site-end">
-        <span class="net" title="Contracts live on QIE testnet (chain 1983)"><span class="pill pill-live" style="border:0;background:none;padding:0;height:auto"></span>QIE testnet</span>
-        <button class="theme-dot" type="button" aria-label="Switch light or dark theme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="6.5"/><path d="M10 3.5v13" /><path d="M10 3.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
-        <a class="btn btn-ghost" href="https://github.com/tomcode1000/tripwire-qie">GitHub</a>
-        <a class="btn btn-primary" href="arm.html">Arm a trap</a>
-      </div></div></header>`;
+        <button class="theme-dot" type="button" aria-label="Switch light or dark theme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="6.5"/><path d="M10 3.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
+        <a class="btn btn-ghost btn-sm hide-sm" href="${REPO}">Source</a>
+        <a class="btn btn-ink btn-sm hide-sm" href="arm.html">Set a trap</a>
+        <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
+      </div></div></header>
+      <div class="drawer" id="drawer" hidden><div class="shell">${nav.map(([h, t], i) => `<a href="${h}"${page === h ? ' aria-current="page"' : ""}><span class="mono">0${i + 1}</span>${t}</a>`).join("")}
+        <div class="drawer-cta"><a class="btn btn-ink btn-wide" href="arm.html">Set a trap</a><a class="btn btn-ghost btn-wide" href="${REPO}">Source on GitHub</a></div></div></div>
+      <div class="status" aria-label="Live status"><div class="shell status-in">
+        <span class="st"><span class="dot"></span><b>Live on QIE testnet</b></span>
+        <span class="st">Blocklist <a class="u" id="st-reg" href="#">—</a></span>
+        <span class="st bad">Thieves caught <b id="st-flag">—</b></span>
+        <span class="st">Last catch <b id="st-last">—</b></span>
+        <span class="st">Tests <b id="st-tests">—</b> passing</span>
+        <span class="st">Coverage <b id="st-cov">—</b></span>
+        <span class="st">Audit <b>not yet</b></span>
+      </div></div></div>`;
+  }
+
+  // masthead behaviour, as on real sites:
+  //  - over the hero it is transparent; it turns solid once the page scrolls
+  //  - scrolling down past the fold hides it; any scroll up brings it back
+  //  - the status band folds away once scrolled, so only the 60px bar stays
+  const mh = $("#masthead");
+  if (mh) {
+    let lastY = scrollY;
+    let ticking = false;
+    const update = () => {
+      const y = Math.max(0, scrollY);
+      mh.classList.toggle("solid", y > 8);
+      mh.classList.toggle("compact", y > 120);
+      const goingDown = y > lastY + 4;
+      const goingUp = y < lastY - 4;
+      if (goingDown && y > 420 && !mh.classList.contains("menu-open")) mh.classList.add("tucked");
+      else if (goingUp || y < 420) mh.classList.remove("tucked");
+      lastY = y;
+      ticking = false;
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+    const btn = $(".menu-btn", mh);
+    const drawer = $("#drawer");
+    const setMenu = (open) => {
+      mh.classList.toggle("menu-open", open);
+      btn.setAttribute("aria-expanded", String(open));
+      btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      drawer.hidden = !open;
+      document.body.style.overflow = open ? "hidden" : "";
+    };
+    btn.addEventListener("click", () => setMenu(!mh.classList.contains("menu-open")));
+    addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
+    addEventListener("resize", () => innerWidth > 900 && setMenu(false));
   }
   const foot = $("[data-chrome=foot]");
   if (foot) {
-    foot.outerHTML = `<footer class="site-foot"><div class="shell foot-in">
-      <div style="display:grid;gap:10px;max-width:340px">
-        <a class="brand" href="index.html"><span class="mark">${MARK}</span><span>Tripwire</span></a>
-        <p class="fine">Bait keys for builders on QIE. Built for QIE Blockchain Hackathon 3.0, Developer Infrastructure &amp; Tooling. Testnet build, not audited.</p>
+    foot.outerHTML = `<footer class="site-foot"><div class="shell">
+      <div class="foot-in">
+        <div style="display:grid;gap:14px;max-width:420px">
+          <a class="brand" href="index.html"><span class="mark">${MARK}</span><span>Tripwire</span></a>
+          <p class="fine">Tripwire hides fake keys next to your real ones. The moment someone uses one, your money locks, the thief is blocklisted, and you know exactly which file leaked.</p>
+        </div>
+        <div class="foot-cols">
+          <div><span>Product</span><a href="incident.html">Incidents</a><a href="registry.html">Blocklist</a><a href="arm.html">Set a trap</a></div>
+          <div><span>Proof</span><a href="evidence.html">How we tested it</a><a href="${REPO}/blob/main/docs/EVAL.md">Attack evaluation</a><a href="${REPO}/blob/main/docs/REFERENCES.md">References</a></div>
+          <div><span>Source</span><a href="${REPO}">GitHub</a><a href="${REPO}/actions">CI runs</a><a href="https://testnet.qie.digital">QIE explorer</a></div>
+        </div>
       </div>
-      <div class="foot-cols">
-        <div><span>Product</span><a href="list.html">The list</a><a href="arm.html">Arm a trap</a><a href="evidence.html">Evidence</a></div>
-        <div><span>Proof</span><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/docs/EVIDENCE.md">Claim by claim</a><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/docs/EVAL.md">Attack evaluation</a><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/docs/REFERENCES.md">References</a></div>
-        <div><span>Code</span><a href="https://github.com/tomcode1000/tripwire-qie">GitHub</a><a href="https://github.com/tomcode1000/tripwire-qie/actions">CI runs</a><a href="https://testnet.qie.digital">QIE explorer</a></div>
-      </div></div></footer>`;
+      <div class="foot-legal"><span class="fine">QIE Blockchain Hackathon 3.0 · Developer Infrastructure &amp; Tooling · Testnet build, not audited.</span><span class="fine">MIT licensed</span></div>
+    </div></footer>`;
   }
-  $(".theme-dot")?.addEventListener("click", () =>
-    setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark")
-  );
-  const sh = $(".site-head");
-  const onScroll = () => sh && sh.classList.toggle("scrolled", scrollY > 8);
-  addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  $(".theme-dot")?.addEventListener("click", () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"));
+
+  // optional media: photographs and loops appear when the files exist; until then the stand-in shows
+  $$("img[data-opt]").forEach((img) => img.addEventListener("error", () => img.remove(), { once: true }));
+  $$("video[data-opt]").forEach((v) => {
+    const src = v.querySelector("source");
+    (src || v).addEventListener("error", () => v.remove(), { once: true });
+  });
 
   // fade sections in once
   const io = "IntersectionObserver" in window ? new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))), { rootMargin: "0px 0px -8% 0px" }) : null;
@@ -70,33 +113,37 @@
   // ---------------------------------------------------------------- helpers
   const short = (a, n = 4) => (a ? `${a.slice(0, 2 + n)}…${a.slice(-n)}` : "");
   const fmt = (n, d = 0) => Number(n).toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d });
-  window.TW = { $, $$, short, fmt };
+  const get = (o, p) => p.split(".").reduce((x, k) => (x == null ? x : x[k]), o);
+  window.TW = { $, $$, short, fmt, REPO };
 
   // ---------------------------------------------------------------- evidence data
   TW.data = fetch("data.json", { cache: "no-cache" }).then((r) => r.json());
   TW.data.then((d) => {
     TW.d = d;
-    const tx = (h) => `${d.network.explorer}/tx/${h}`;
-    const addr = (a) => `${d.network.explorer}/address/${a}`;
-    TW.tx = tx;
-    TW.addr = addr;
-    // fill [data-k="path.to.value"] with optional data-fmt
+    TW.tx = (h) => `${d.network.explorer}/tx/${h}`;
+    TW.addr = (a) => `${d.network.explorer}/address/${a}`;
     $$("[data-k]").forEach((el) => {
-      const v = el.dataset.k.split(".").reduce((o, k) => (o == null ? o : o[k]), d);
+      const v = get(d, el.dataset.k);
       if (v == null) return;
       const f = el.dataset.fmt;
-      el.textContent = f === "short" ? short(v) : f === "int" ? fmt(v) : f === "1" ? fmt(v, 1) : f === "date" ? new Date(v).toUTCString().replace(" GMT", " UTC") : String(v);
+      el.textContent = f === "short" ? short(v) : f === "int" ? fmt(v) : f === "1" ? fmt(v, 1) : f === "date" ? new Date(v).toUTCString().replace(" GMT", " UTC") : f === "day" ? new Date(v).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }) : String(v);
     });
-    // [data-href="tx:liveTrip.tx" | "addr:contracts.FlagRegistry" | "src:eval.source"]
     $$("[data-href]").forEach((el) => {
       const [kind, p] = el.dataset.href.split(":");
-      const v = p.split(".").reduce((o, k) => (o == null ? o : o[k]), d);
+      const v = get(d, p);
       if (!v) return;
-      el.href = kind === "tx" ? tx(v) : kind === "addr" ? addr(v) : v;
+      el.href = kind === "tx" ? TW.tx(v) : kind === "addr" ? TW.addr(v) : v;
       el.target = "_blank";
       el.rel = "noopener";
     });
+    // status band from evidence; live values replace these below
+    const reg = $("#st-reg");
+    if (reg) { reg.textContent = short(d.contracts.FlagRegistry); reg.href = TW.addr(d.contracts.FlagRegistry); reg.target = "_blank"; }
+    $("#st-tests") && ($("#st-tests").textContent = d.tests.passing);
+    $("#st-cov") && ($("#st-cov").textContent = `${d.tests.coverage.lines}% lines`);
+    $("#st-last") && ($("#st-last").textContent = `block ${fmt(d.liveTrip.block)}`);
     document.dispatchEvent(new CustomEvent("tw:data", { detail: d }));
+    liveStatus(d);
   });
 
   // ---------------------------------------------------------------- live chain
@@ -107,39 +154,57 @@
     "event Flagged(address indexed who, address indexed trap, address indexed bait, uint32 count)",
   ];
   TW.REGISTRY_ABI = REGISTRY_ABI;
-  TW.provider = async () => {
+  let providerP;
+  TW.provider = () =>
+    (providerP ||= (async () => {
+      const d = await TW.data;
+      for (const url of d.network.rpc) {
+        try {
+          const p = new ethers.JsonRpcProvider(url, d.network.chainId, { staticNetwork: true, batchMaxCount: 1 });
+          await Promise.race([p.getBlockNumber(), new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 15000))]);
+          return p;
+        } catch {}
+      }
+      providerP = null;
+      throw new Error("QIE testnet RPC unreachable");
+    })());
+  TW.registry = async () => new ethers.Contract((await TW.data).contracts.FlagRegistry, REGISTRY_ABI, await TW.provider());
+
+  let flagEvents;
+  TW.flagEvents = async () => {
+    if (flagEvents) return flagEvents;
     const d = await TW.data;
-    for (const url of d.network.rpc) {
-      try {
-        const p = new ethers.JsonRpcProvider(url, d.network.chainId, { staticNetwork: true });
-        await Promise.race([p.getBlockNumber(), new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 8000))]);
-        return p;
-      } catch {}
+    const r = await TW.registry();
+    flagEvents = await r.queryFilter(r.filters.Flagged(), d.contracts.deployBlockHint);
+    return flagEvents;
+  };
+
+  async function liveStatus() {
+    if (!window.ethers || !$("#st-flag")) return;
+    try {
+      const r = await TW.registry();
+      $("#st-flag").textContent = (await r.flaggedCount()).toString();
+      const evs = await TW.flagEvents();
+      if (evs.length) $("#st-last").textContent = `block ${fmt(evs[evs.length - 1].blockNumber)}`;
+    } catch {
+      $("#st-flag").textContent = "2 (saved)";
     }
-    throw new Error("QIE testnet RPC unreachable");
-  };
-  TW.registry = async () => {
-    const d = await TW.data;
-    return new ethers.Contract(d.contracts.FlagRegistry, REGISTRY_ABI, await TW.provider());
-  };
+  }
 
   // address checker: any [data-check] form
   $$("[data-check]").forEach((form) => {
     const input = $("input", form);
-    const out = $(".check-out", form.parentElement) || $(".check-out");
+    const out = form.parentElement.querySelector(".check-out");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const a = input.value.trim();
-      if (!/^0x[0-9a-fA-F]{40}$/.test(a)) {
-        out.innerHTML = `<span class="fine">Enter a 0x address (42 characters).</span>`;
-        return;
-      }
+      if (!/^0x[0-9a-fA-F]{40}$/.test(a)) { out.innerHTML = `<span class="fine">Enter a 0x address (42 characters).</span>`; return; }
       out.innerHTML = `<span class="fine">Reading the registry on QIE testnet…</span>`;
       try {
         const r = await TW.registry();
         if (await r.isFlagged(a)) {
           const f = await r.flagOf(a);
-          out.innerHTML = `<span class="verdict bad">● Flagged</span> <span class="fine">· took bait ${f.count} time${f.count > 1 ? "s" : ""}, first ${new Date(Number(f.firstSeen) * 1000).toUTCString().replace(" GMT", " UTC")} · <a href="${TW.addr(a)}" target="_blank" rel="noopener">explorer</a></span>`;
+          out.innerHTML = `<span class="verdict bad">● Flagged</span> <span class="fine">· took bait ${f.count} time${f.count > 1 ? "s" : ""}, first ${new Date(Number(f.firstSeen) * 1000).toUTCString().replace(" GMT", " UTC")} · <a class="u" href="${TW.addr(a)}" target="_blank" rel="noopener">explorer</a></span>`;
         } else {
           out.innerHTML = `<span class="verdict good">● Not flagged</span> <span class="fine">· no trip recorded against this address</span>`;
         }
