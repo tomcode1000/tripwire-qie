@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Incidents · Tripwire</title>
+<meta name="description" content="Every catch Tripwire has recorded on QIE, written up like an incident report, with every value linked to the chain.">
+<script>try{const t=localStorage.getItem("tripwire-theme");if(t)document.documentElement.dataset.theme=t}catch{}</script>
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap">
+<link rel="stylesheet" href="assets/tripwire.css">
+</head>
+<body data-page="incident.html">
+<div data-chrome="head"></div>
+
+<!-- mirrors web/img/design/incident.jpg -->
+<main class="shell">
+  <header class="page-head" style="border-bottom:0;padding-bottom:36px">
+    <span class="eyebrow" style="font-family:var(--mono);font-weight:500;letter-spacing:.06em;color:var(--ink-2)">INCIDENTS</span>
+    <h1 class="display" style="margin-top:14px">Two catches on record. Nothing taken.</h1>
+    <p class="lede">Every time a bait key is used, Tripwire writes it up like an incident report. Nothing here is typed by us: every value comes from the chain, and every value links to it.</p>
+  </header>
+
+  <div class="incident-grid" style="padding-bottom:96px">
+    <div class="stack">
+      <!-- TW-0001 -->
+      <article class="case" id="tw-0001">
+        <div class="wire tripped"></div>
+        <div class="case-top"><span class="case-id">INCIDENT TW-0001</span><span class="pill pill-bad">Tripped</span></div>
+        <div class="case-meta">Recorded <span data-k="liveTrip.time" data-fmt="date">—</span> · block <span data-k="liveTrip.block" data-fmt="int">—</span></div>
+        <div class="case-title"><h2 class="h4">Someone used a stolen key. They got nothing.</h2></div>
+        <dl class="cells">
+          <div><dt>Bait hidden in</dt><dd data-k="liveTrip.lockReason">—</dd></div>
+          <div><dt>Thief</dt><dd><a class="u" data-href="addr:liveTrip.thief" data-k="liveTrip.thief" data-fmt="short" href="#">—</a><span class="tag">Blocklisted</span></dd></div>
+          <div><dt>Trap</dt><dd><a class="u" data-href="addr:liveTrip.trap" data-k="liveTrip.trap" data-fmt="short" href="#">—</a></dd></div>
+          <div><dt>Bait taken</dt><dd><span data-k="liveTrip.thiefReceived">0</span> rUSD (<span data-k="liveTrip.baitBefore">500</span> before and after)</dd></div>
+          <div><dt>Owner's funds</dt><dd class="safe">Locked</dd></div>
+          <div><dt>Network</dt><dd>QIE testnet, chain 1983</dd></div>
+        </dl>
+        <div class="timeline">
+          <div class="tl bad"><span class="t">T+0 s</span><span class="k"></span><span class="w">The fake key is used to try to move 500 rUSD</span></div>
+          <div class="tl good"><span class="t">T+0 s</span><span class="k"></span><span class="w">The bait stays put and the owner's funds lock, in the same transaction</span></div>
+          <div class="tl bad"><span class="t">T+0 s</span><span class="k"></span><span class="w">The thief's address goes on the public blocklist</span></div>
+        </div>
+        <div class="case-foot"><a data-href="tx:liveTrip.tx" href="#">Transaction ↗</a><a data-href="addr:liveTrip.vault" href="#">Vault ↗</a><a data-href="src:liveTrip.source" href="#">Raw record ↗</a></div>
+      </article>
+
+      <!-- TW-0002 -->
+      <article class="case" id="tw-0002">
+        <div class="wire tripped"></div>
+        <div class="case-top"><span class="case-id">INCIDENT TW-0002 · CAUGHT BY THE WATCHER</span><span class="pill pill-bad">Tripped</span></div>
+        <div class="case-title"><h2 class="h4">A bot emptied a bait wallet's gas. It was blocklisted <span data-k="keeper.reportSeconds">7.7</span> seconds later.</h2></div>
+        <dl class="cells">
+          <div><dt>What happened</dt><dd>Bait key used to sweep its QIE</dd></div>
+          <div><dt>Thief</dt><dd><a class="u" data-href="addr:keeper.thief" data-k="keeper.thief" data-fmt="short" href="#">—</a><span class="tag">Blocklisted</span></dd></div>
+          <div><dt>Time to catch</dt><dd><span data-k="keeper.reportSeconds">7.7</span> s</dd></div>
+        </dl>
+        <div class="timeline">
+          <div class="tl bad"><span class="t">T+0 s</span><span class="k"></span><span class="w">A bot uses the leaked key to send the wallet's QIE to itself</span></div>
+          <div class="tl"><span class="t">T+<span data-k="keeper.reportSeconds">7.7</span> s</span><span class="k"></span><span class="w">The watcher spots it in that block and reports it</span></div>
+          <div class="tl bad"><span class="t">T+<span data-k="keeper.reportSeconds">7.7</span> s</span><span class="k"></span><span class="w">The bot's address goes on the public blocklist</span></div>
+        </div>
+        <div class="case-foot"><a data-href="tx:keeper.sweepTx" href="#">The sweep ↗</a><a data-href="tx:keeper.reportTx" href="#">The report ↗</a><a data-href="src:keeper.source" href="#">Raw record ↗</a></div>
+      </article>
+      <p class="fine">Both catches are our own tests on QIE testnet, run on 27 November 2026 to prove the system end to end. Real catches will appear here as they happen.</p>
+    </div>
+
+    <aside class="side-notes" style="position:sticky;top:110px">
+      <h2 class="h4">How to read a case file</h2>
+      <ol>
+        <li><span>01</span><p>"Bait hidden in" is the label you gave the fake key. It's where you leaked, so start there.</p></li>
+        <li><span>02</span><p>Every address and transaction links to the QIE explorer. Check it yourself.</p></li>
+        <li><span>03</span><p>Nothing here is self-reported. A trap writes it inside the thief's own transaction.</p></li>
+      </ol>
+      <a class="btn btn-ink" href="arm.html" style="justify-self:start">Set your own trap</a>
+    </aside>
+  </div>
+</main>
+
+<div data-chrome="foot"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

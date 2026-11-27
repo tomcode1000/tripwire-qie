@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blocklist · Tripwire</title>
+<meta name="description" content="Every address caught using a Tripwire fake key, read live from the blocklist contract on QIE.">
+<script>try{const t=localStorage.getItem("tripwire-theme");if(t)document.documentElement.dataset.theme=t}catch{}</script>
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap">
+<link rel="stylesheet" href="assets/tripwire.css">
+</head>
+<body data-page="registry.html">
+<div data-chrome="head"></div>
+
+<!-- mirrors web/img/design/registry.jpg -->
+<main class="shell" style="padding-bottom:96px">
+  <header class="page-head" style="border-bottom:0;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:40px;align-items:center">
+    <div>
+      <span class="eyebrow" style="font-family:var(--mono);font-weight:500;letter-spacing:.06em;color:var(--ink-2)">BLOCKLIST</span>
+      <h1 class="display" style="margin-top:14px">Everyone caught taking the bait</h1>
+      <p class="lede">Only a trap can add an address, inside the thief's own transaction. Nobody ends up here because of a report, a rumour or a claim.</p>
+    </div>
+    <div class="panel panel-pad">
+      <span class="eyebrow" style="margin-bottom:12px">Is this address safe to pay?</span>
+      <form class="check" data-check>
+        <input class="input" placeholder="0x…" aria-label="Address to check" spellcheck="false" autocomplete="off">
+        <button class="btn btn-primary" type="submit">Check</button>
+      </form>
+      <div class="check-out"></div>
+    </div>
+  </header>
+
+  <div class="figbox">
+    <div class="bad"><b id="s-flagged">—</b><span>Thieves caught</span></div>
+    <div><b id="s-trips">—</b><span>Catches recorded</span></div>
+    <div><b id="s-latest">—</b><span>Latest catch, block</span></div>
+    <div><b class="mono" data-k="contracts.FlagRegistry" data-fmt="short">—</b><span>Blocklist contract</span><a data-href="addr:contracts.FlagRegistry" href="#">View on explorer</a></div>
+  </div>
+
+  <div class="ledger-wrap" style="margin-top:40px">
+    <table class="ledger">
+      <thead><tr><th>Blocklisted address</th><th class="r">Times</th><th>Fake key used</th><th>Trap</th><th class="r">Block</th><th>Transaction</th></tr></thead>
+      <tbody id="rows"><tr><td colspan="6" class="fine">Reading the blocklist on QIE testnet…</td></tr></tbody>
+    </table>
+  </div>
+  <p class="fine" style="margin-top:14px">Live from QIE testnet. Today's two rows are our own end-to-end tests: <a class="u" href="incident.html#tw-0001">TW-0001</a> and <a class="u" href="incident.html#tw-0002">TW-0002</a>.</p>
+
+  <section class="pair" style="margin-top:80px;align-items:center">
+    <div>
+      <span class="eyebrow" style="font-family:var(--mono);font-weight:500;letter-spacing:.06em;color:var(--ink-2)">USE IT</span>
+      <h2 class="h2" style="margin-top:12px">Refuse a caught thief in one line.</h2>
+      <p class="lede" style="margin-top:18px">The blocklist is free to read from a contract, an app or an AI agent. Check before you pay, list or airdrop.</p>
+    </div>
+    <div class="codeblock" style="margin-top:0">interface IFlagRegistry {
+  function isFlagged(address who) external view returns (bool);
+}
+
+// Solidity: refuse to pay a caught thief
+require(!IFlagRegistry(BLOCKLIST).isFlagged(to), "blocklisted by Tripwire");
+
+// ethers v6, in an app or AI agent
+const list = new ethers.Contract(BLOCKLIST, ["function isFlagged(address) view returns (bool)"], provider);
+if (await list.isFlagged(payee)) throw new Error("payee is on the Tripwire blocklist");</div>
+  </section>
+</main>
+
+<div data-chrome="foot"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+  document.addEventListener("tw:data", async () => {
+    const rows = document.getElementById("rows");
+    try {
+      const r = await TW.registry();
+      const evs = await TW.flagEvents();
+      const by = new Map();
+      for (const ev of evs) {
+        const a = ev.args.who;
+        by.set(a, { who: a, count: Number(ev.args.count), bait: ev.args.bait, trap: ev.args.trap, block: ev.blockNumber, tx: ev.transactionHash });
+      }
+      const list = [...by.values()].sort((a, b) => b.block - a.block);
+      document.getElementById("s-flagged").textContent = (await r.flaggedCount()).toString();
+      document.getElementById("s-trips").textContent = evs.length;
+      document.getElementById("s-latest").textContent = list[0] ? TW.fmt(list[0].block) : "—";
+      rows.innerHTML = list.length
+        ? list.map((x) => `<tr>
+            <td><a class="mono" href="${TW.addr(x.who)}" target="_blank" rel="noopener">${x.who}</a><span class="tag">Blocklisted</span></td>
+            <td class="r">${x.count}</td>
+            <td><a class="mono" href="${TW.addr(x.bait)}" target="_blank" rel="noopener">${TW.short(x.bait)}</a></td>
+            <td><a class="mono" href="${TW.addr(x.trap)}" target="_blank" rel="noopener">${TW.short(x.trap)}</a></td>
+            <td class="r mono">${TW.fmt(x.block)}</td>
+            <td><a class="mono" href="${TW.tx(x.tx)}" target="_blank" rel="noopener">${TW.short(x.tx, 6)} ↗</a></td></tr>`).join("")
+        : `<tr><td colspan="6" class="fine">Nobody caught yet.</td></tr>`;
+    } catch (err) {
+      // chain unreachable: show the saved on-chain records instead, labelled as such
+      const d = TW.d;
+      const saved = [
+        { who: d.keeper.thief, bait: "—", trap: d.liveTrip.trap, tx: d.keeper.reportTx, block: null, label: "TW-0002" },
+        { who: d.liveTrip.thief, bait: d.liveTrip.bait, trap: d.liveTrip.trap, tx: d.liveTrip.tx, block: d.liveTrip.block, label: "TW-0001" },
+      ];
+      document.getElementById("s-flagged").textContent = "2";
+      document.getElementById("s-trips").textContent = "2";
+      document.getElementById("s-latest").textContent = TW.fmt(d.liveTrip.block);
+      rows.innerHTML = saved.map((x) => `<tr>
+        <td><a class="mono" href="${TW.addr(x.who)}" target="_blank" rel="noopener">${x.who}</a><span class="tag">Blocklisted</span></td>
+        <td class="r">1</td>
+        <td>${x.bait === "—" ? "—" : `<a class="mono" href="${TW.addr(x.bait)}" target="_blank" rel="noopener">${TW.short(x.bait)}</a>`}</td>
+        <td><a class="mono" href="${TW.addr(x.trap)}" target="_blank" rel="noopener">${TW.short(x.trap)}</a></td>
+        <td class="r mono">${x.block ? TW.fmt(x.block) : "—"}</td>
+        <td><a class="mono" href="${TW.tx(x.tx)}" target="_blank" rel="noopener">${TW.short(x.tx, 6)} ↗</a></td></tr>`).join("") +
+        `<tr><td colspan="6" class="fine">QIE testnet didn't answer just now, so these rows come from our saved records of the same transactions. Each link still opens the chain.</td></tr>`;
+    }
+  });
+</script>
+</body>
+</html>
