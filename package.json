@@ -7,7 +7,9 @@
     "compile": "hardhat compile",
     "test": "hardhat test",
     "coverage": "hardhat coverage",
-    "test:summary": "node scripts/test-summary.js"
+    "test:summary": "node scripts/test-summary.js",
+    "site:data": "node scripts/build-site-data.js",
+    "site:serve": "node scripts/build-site-data.js && npx --yes http-server@14.1.1 web -p 5177 -c-1"
   },
   "keywords": [],
   "author": "",

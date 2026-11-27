@@ -1,0 +1,121 @@
+{
+  "builtAt": "2026-11-27T16:39:22.342Z",
+  "repo": "https://github.com/tomcode1000/tripwire-qie",
+  "network": {
+    "name": "QIE testnet",
+    "chainId": 1983,
+    "rpc": [
+      "https://rpc4testnet.qie.digital",
+      "https://rpc5testnet.qie.digital"
+    ],
+    "explorer": "https://testnet.qie.digital"
+  },
+  "contracts": {
+    "FlagRegistry": "0xbFC006A0Becf8Dc567C09AA1f5A86fadeDA36F94",
+    "TripwireFactory": "0x11888A9E56aeea05D3A1546942B477D6365554A6",
+    "BaitToken": "0xdC73612Bc7a958C934495b2Ba2D5f5F6Ec22e0BB",
+    "deployBlockHint": 10007138,
+    "source": "https://github.com/tomcode1000/tripwire-qie/blob/main/deployments/qieTestnet.json"
+  },
+  "liveTrip": {
+    "tx": "0xb26388ac68e178d19b447b7496fffb1e9d7204be99520f9dc1af7f8235cd7a04",
+    "block": 10007538,
+    "time": "2026-11-27T15:33:58.000Z",
+    "bait": "0xe15Bcb43dc59E554dca6E9965cd8D3F6F0f34E1e",
+    "thief": "0xEA5C13eA7e695D52c0976A451fB2085d8df38aC7",
+    "vault": "0x86ee68CE65b078c9F24668DEd411c9e41771BC52",
+    "trap": "0x16bD3dB9862D01a512e1D62DCBfddce52f973765",
+    "lockReason": "github:demo-repo/.env",
+    "vaultLocked": true,
+    "thiefFlagged": true,
+    "baitBefore": 500,
+    "baitAfter": 500,
+    "thiefReceived": 0,
+    "source": "https://github.com/tomcode1000/tripwire-qie/blob/main/docs/runs/2026-11-27-qieTestnet-live-trip.json"
+  },
+  "keeper": {
+    "sweepTx": "0x52c580772aebdab1ba5f951fdf298fb5fa689f08c0ff78038f6494c448f2124e",
+    "reportTx": "0xba110156b50b8eac76b8b3839920ee35eb5a47b79f26c2f02dc67e978d6dacaa",
+    "thief": "0xAceaE5a7AACb9204fA767475909db518CeFF0928",
+    "reportSeconds": 7.7,
+    "source": "https://github.com/tomcode1000/tripwire-qie/blob/main/docs/runs/2026-11-27-qieTestnet-keeper-sweep.json"
+  },
+  "eval": {
+    "runs": 50,
+    "seed": 20261127,
+    "baitAttacks": 39,
+    "caught": 39,
+    "innocentFlagged": 0,
+    "plainStolen": 400,
+    "tripwireStolenWorst": 118,
+    "tripwireStolenReact": 13.5,
+    "byStrategy": [
+      {
+        "name": "bait-transfer + owner drain",
+        "runs": 16,
+        "caught": 16,
+        "plain": 160,
+        "worst": 4,
+        "react": 4
+      },
+      {
+        "name": "bait-approve-sweeper + owner drain",
+        "runs": 6,
+        "caught": 6,
+        "plain": 60,
+        "worst": 2,
+        "react": 2
+      },
+      {
+        "name": "native sweep of bait (keeper) + owner drain",
+        "runs": 7,
+        "caught": 7,
+        "plain": 70,
+        "worst": 2,
+        "react": 2
+      },
+      {
+        "name": "bait-transfer only",
+        "runs": 10,
+        "caught": 10,
+        "plain": 0,
+        "worst": 0,
+        "react": 0
+      },
+      {
+        "name": "owner key only, bait untouched",
+        "runs": 11,
+        "caught": 0,
+        "plain": 110,
+        "worst": 110,
+        "react": 5.5
+      }
+    ],
+    "source": "https://github.com/tomcode1000/tripwire-qie/blob/main/docs/EVAL.md",
+    "rawWorst": "https://github.com/tomcode1000/tripwire-qie/blob/main/docs/runs/2026-11-27-eval-worst-case.json",
+    "rawReact": "https://github.com/tomcode1000/tripwire-qie/blob/main/docs/runs/2026-11-27-eval-builder-reacts.json"
+  },
+  "tests": {
+    "passing": 65,
+    "failing": 0,
+    "coverage": {
+      "lines": 100,
+      "statements": 100,
+      "functions": 100,
+      "branches": 94.29
+    },
+    "source": "https://github.com/tomcode1000/tripwire-qie/blob/main/docs/assets/test-report.txt",
+    "evidence": "https://github.com/tomcode1000/tripwire-qie/blob/main/docs/EVIDENCE.md"
+  },
+  "qie": {
+    "gasPriceGwei": 1.125,
+    "transferCostQie": 0.000023625,
+    "deployGas": 3744832,
+    "sample": {
+      "tx": 600,
+      "senders": 32,
+      "topShare": 0.587
+    },
+    "source": "https://github.com/tomcode1000/tripwire-qie/blob/main/docs/runs/2026-11-27-qie-activity-summary.json"
+  }
+}
