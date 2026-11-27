@@ -19,7 +19,7 @@
     ["incident.html", "Incidents"],
     ["registry.html", "Blocklist"],
     ["evidence.html", "Proof"],
-    ["arm.html", "Set a trap"],
+    ["arm.html", "Set your alarm"],
   ];
   const head = $("[data-chrome=head]");
   if (head) {
@@ -30,11 +30,11 @@
       <div class="site-end">
         <button class="theme-dot" type="button" aria-label="Switch light or dark theme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="6.5"/><path d="M10 3.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
         <a class="btn btn-ghost btn-sm hide-sm" href="${REPO}">Source</a>
-        <a class="btn btn-ink btn-sm hide-sm" href="arm.html">Set a trap</a>
+        <a class="btn btn-ink btn-sm hide-sm" href="arm.html">Set your alarm</a>
         <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
       </div></div></header>
       <div class="drawer" id="drawer" hidden><div class="shell">${nav.map(([h, t], i) => `<a href="${h}"${page === h ? ' aria-current="page"' : ""}><span class="mono">0${i + 1}</span>${t}</a>`).join("")}
-        <div class="drawer-cta"><a class="btn btn-ink btn-wide" href="arm.html">Set a trap</a><a class="btn btn-ghost btn-wide" href="${REPO}">Source on GitHub</a></div></div></div>
+        <div class="drawer-cta"><a class="btn btn-ink btn-wide" href="arm.html">Set your alarm</a><a class="btn btn-ghost btn-wide" href="${REPO}">Source on GitHub</a></div></div></div>
       <div class="status" aria-label="Live status"><div class="shell status-in">
         <span class="st"><span class="dot"></span><b>Live on QIE testnet</b></span>
         <span class="st">Blocklist <a class="u" id="st-reg" href="#">—</a></span>
@@ -89,7 +89,7 @@
           <p class="fine">Tripwire hides fake keys next to your real ones. The moment someone uses one, your money locks, the thief is blocklisted, and you know exactly which file leaked.</p>
         </div>
         <div class="foot-cols">
-          <div><span>Product</span><a href="incident.html">Incidents</a><a href="registry.html">Blocklist</a><a href="arm.html">Set a trap</a></div>
+          <div><span>Product</span><a href="incident.html">Incidents</a><a href="registry.html">Blocklist</a><a href="arm.html">Set your alarm</a></div>
           <div><span>Proof</span><a href="evidence.html">How we tested it</a><a href="${REPO}/blob/main/docs/EVAL.md">Attack evaluation</a><a href="${REPO}/blob/main/docs/REFERENCES.md">References</a></div>
           <div><span>Source</span><a href="${REPO}">GitHub</a><a href="${REPO}/actions">CI runs</a><a href="https://testnet.qie.digital">QIE explorer</a></div>
         </div>
