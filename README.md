@@ -11,7 +11,7 @@
 
 QIE Blockchain Hackathon 3.0 · Track: Developer Infrastructure & Tooling
 
-> **Status (2026-11-27):** contracts and tests done. Testnet and mainnet deployments, the CLI, the live dashboard and the demo video are in progress. This README says plainly what is live and what is not.
+> **Status (2026-11-27):** contracts and tests done; deployed on QIE testnet with a recorded live trip. Mainnet deployment, the CLI, the live dashboard and the demo video are in progress. This README says plainly what is live and what is not.
 
 ## For judges
 
@@ -23,6 +23,8 @@ QIE Blockchain Hackathon 3.0 · Track: Developer Infrastructure & Tooling
 | 54 tests, 100% line coverage | [`docs/assets/test-summary.json`](docs/assets/test-summary.json), CI badge above |
 | Leaked keys are drained in seconds; bait keys exist for cloud, not crypto | [`docs/REFERENCES.md`](docs/REFERENCES.md) |
 | QIE costs about $0.000004 per transfer, so planting bait is free | [`docs/runs/`](docs/runs/) (dated measurements) |
+| **Live trip on QIE testnet:** a stolen bait key moved bait, the vault locked with reason `github:demo-repo/.env`, the thief was flagged, and the bait never moved | [thief's tx](https://testnet.qie.digital/tx/0xb26388ac68e178d19b447b7496fffb1e9d7204be99520f9dc1af7f8235cd7a04), full record [`docs/runs/2026-11-27-qieTestnet-live-trip.json`](docs/runs/2026-11-27-qieTestnet-live-trip.json) |
+| Testnet contracts (chain 1983) | FlagRegistry [`0xbFC0…6F94`](https://testnet.qie.digital/address/0xbFC006A0Becf8Dc567C09AA1f5A86fadeDA36F94), TripwireFactory [`0x1188…54A6`](https://testnet.qie.digital/address/0x11888A9E56aeea05D3A1546942B477D6365554A6), BaitToken [`0xdC73…e0BB`](https://testnet.qie.digital/address/0xdC73612Bc7a958C934495b2Ba2D5f5F6Ec22e0BB) ([`deployments/qieTestnet.json`](deployments/qieTestnet.json)) |
 | Mainnet contracts | _pending deployment_ |
 | Live dashboard and demo video | _pending_ |
 

@@ -1,0 +1,19 @@
+{
+  "network": "qieTestnet",
+  "chainId": 1983,
+  "deployedAt": "2026-11-27T15:33:58.940Z",
+  "deployer": "0xdf23A958311e16BafF3221f0BC9Ed365A7Ba310b",
+  "FlagRegistry": {
+    "address": "0xbFC006A0Becf8Dc567C09AA1f5A86fadeDA36F94",
+    "tx": "0x8533f5e2459646b9f2c518182e3e983df9e2f227168314eb297fec96f3612c42"
+  },
+  "TripwireFactory": {
+    "address": "0x11888A9E56aeea05D3A1546942B477D6365554A6",
+    "tx": "0xed71900661a6812e7475b31958d09c808745f5979dce77456f122f67e3905794"
+  },
+  "BaitToken": {
+    "address": "0xdC73612Bc7a958C934495b2Ba2D5f5F6Ec22e0BB"
+  },
+  "linkTx": "0x29dc9acc4a325c176f83cfb6f64380ddf3b30bae1ee4e0fedb19cf07fc3ea0f9",
+  "gasUsed": "3744832"
+}
