@@ -3,214 +3,230 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tripwire · Bait keys for builders on QIE</title>
-<meta name="description" content="Leave a bait key where a real one could leak. When a thief or sweeper bot uses it, your vault locks, the thief is flagged for every app on QIE, and you learn which file leaked.">
+<title>Tripwire · Leave a key. Catch the thief.</title>
+<meta name="description" content="Tripwire hides fake keys next to your real ones. The moment someone uses one, your money locks, the thief is blocklisted, and you know exactly which file leaked.">
+<meta property="og:title" content="Tripwire · Leave a key. Catch the thief.">
+<meta property="og:description" content="Hide fake keys next to your real ones. The moment someone uses one, your money locks, the thief is blocklisted, and you know which file leaked.">
+<meta property="og:image" content="img/hero-light.jpg">
+<script>try{const t=localStorage.getItem("tripwire-theme");if(t)document.documentElement.dataset.theme=t}catch{}</script>
 <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap">
 <link rel="stylesheet" href="assets/tripwire.css">
 </head>
 <body data-page="index.html">
 <div data-chrome="head"></div>
 
 <main>
-  <!-- hero -->
+  <!-- Hero (mirrors web/img/design/home-hero.jpg) -->
   <section class="hero">
-    <div class="shell hero-grid">
-      <div>
-        <a class="hero-tag" href="#live" data-href="tx:liveTrip.tx"><span class="pill pill-live" style="border:0;background:none;padding:0;height:auto"></span>Live on QIE testnet · last trip <b data-k="liveTrip.time" data-fmt="date">—</b></a>
-        <h1 class="h-hero">Leave a key.<br><em>Catch the thief.</em></h1>
-        <p class="lede">Plant bait private keys where a real one could leak. The moment a thief or a sweeper bot uses one, your vault locks, the thief is flagged for every app on QIE, and you learn exactly which file leaked.</p>
+    <div class="hero-media" aria-hidden="true">
+      <div class="standin"></div>
+      <img class="light-only" data-opt src="img/hero-light.jpg" alt="">
+      <img class="dark-only" data-opt src="img/hero-dark.jpg" alt="">
+    </div>
+    <span class="plate-cap">Plate I — A tripwire, steel and brass.</span>
+    <div class="shell hero-in">
+      <div class="hero-copy">
+        <span class="eyebrow">Security for anyone who deploys on QIE</span>
+        <h1 class="display">Leave a key.<br><em>Catch the thief.</em></h1>
+        <p class="lede">Hide fake private keys where your real one could leak. The moment a bot or a thief uses one, your funds lock, the thief is blocklisted across QIE, and you know exactly which file leaked.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="arm.html">Arm a trap</a>
-          <a class="btn-link" href="#live">See the live trip <span>→</span></a>
-        </div>
-        <div class="hero-proof">
-          <div><b><span data-k="eval.caught">39</span>/<span data-k="eval.baitAttacks">39</span></b><span>bait attacks caught</span></div>
-          <div><b><span data-k="eval.plainStolen">400</span> → <span data-k="eval.tripwireStolenReact">13.5</span> QIE</b><span>stolen, 50 simulated thefts</span></div>
-          <div><b data-k="eval.innocentFlagged">0</b><span>innocent addresses flagged</span></div>
+          <a class="btn btn-ink" href="arm.html">Set a trap</a>
+          <a class="btn-link" href="incident.html">See a real catch <span>→</span></a>
         </div>
       </div>
 
-      <!-- the receipt of the real testnet trip -->
-      <article class="panel receipt" id="live" aria-label="Live trip on QIE testnet">
+      <article class="case" aria-label="Incident TW-0001">
         <div class="wire tripped"></div>
-        <div class="receipt-head">
-          <span class="h3">Trip recorded <span class="pill pill-bad">Tripped</span></span>
-          <span class="fine mono">block <span data-k="liveTrip.block" data-fmt="int">—</span></span>
+        <div class="case-top"><span class="case-id">INCIDENT TW-0001 · QIE TESTNET</span><span class="pill pill-bad">Tripped</span></div>
+        <div class="case-title"><h2 class="h4">Someone used a stolen key. They got nothing.</h2></div>
+        <div class="timeline">
+          <div class="tl bad"><span class="t">T+0 s</span><span class="k"></span><span class="w">A fake key hidden in <span class="mono" data-k="liveTrip.lockReason">github:demo-repo/.env</span> is used to grab 500 rUSD</span></div>
+          <div class="tl good"><span class="t">T+0 s</span><span class="k"></span><span class="w">The bait doesn't move. The owner's funds lock in the same transaction</span></div>
+          <div class="tl bad"><span class="t">T+0 s</span><span class="k"></span><span class="w">The thief's address goes on the public blocklist</span></div>
+          <div class="tl"><span class="t">T+<span data-k="keeper.reportSeconds">7.7</span> s</span><span class="k"></span><span class="w">A second bot is caught seconds after it strikes</span></div>
         </div>
-        <div class="receipt-rows">
-          <div class="r-row"><span>Bait planted in</span><b class="mono" data-k="liveTrip.lockReason">github:demo-repo/.env</b></div>
-          <div class="r-row"><span>Used by</span><b><a class="mono" data-href="addr:liveTrip.thief" data-k="liveTrip.thief" data-fmt="short">—</a></b></div>
-          <div class="r-row"><span>Bait moved</span><b><span data-k="liveTrip.thiefReceived">0</span> rUSD <span class="fine">(balance <span data-k="liveTrip.baitBefore">500</span> before and after)</span></b></div>
-          <div class="r-row"><span>Builder's vault</span><b class="safe">Locked, same transaction</b></div>
-          <div class="r-row"><span>Thief</span><b class="flag">Flagged on the public list</b></div>
-          <div class="r-row"><span>Keeper catch</span><b>Native-coin sweep reported in <span data-k="keeper.reportSeconds">7.7</span> s</b></div>
-        </div>
-        <div class="receipt-foot">
-          <a data-href="tx:liveTrip.tx" href="#">Thief's transaction ↗</a>
-          <a data-href="src:liveTrip.source" href="#">Full record ↗</a>
-          <a data-href="tx:keeper.reportTx" href="#">Keeper report ↗</a>
-        </div>
+        <div class="case-foot"><a data-href="tx:liveTrip.tx" href="#">Transaction ↗</a><a data-href="src:liveTrip.source" href="#">Record ↗</a><a href="incident.html">Full case file →</a></div>
       </article>
     </div>
   </section>
 
-  <!-- the problem -->
-  <section class="section fade">
-    <div class="shell">
-      <div class="section-head">
-        <span class="kicker">The problem</span>
-        <h2 class="h-display">A leaked key is drained in seconds.<br>You find out when the wallet is empty.</h2>
-        <p class="section-lede">Every builder deploys with a private key, usually in a <span class="mono">.env</span> file. Bots scan GitHub, npm and paste sites around the clock. When one finds a key, it sweeps the wallet before you notice, and you never learn where it leaked.</p>
-      </div>
-      <div class="stats">
-        <div class="stat stat-bad"><b>&lt;100<small>s</small></b><span>A seed phrase pushed to GitHub, drained by bots</span><a href="https://decrypt.co/30222/hacker-steals-1200-worth-of-ethereum-in-under-100-seconds" target="_blank" rel="noopener">Decrypt ↗</a></div>
-        <div class="stat stat-bad"><b>~2<small>min</small></b><span>Leaked access tokens used after publication</span><a href="https://www.threatdown.com/blog/you-have-one-minute-to-save-your-leaked-aws-credentials/" target="_blank" rel="noopener">ThreatDown ↗</a></div>
-        <div class="stat stat-bad"><b>1<small>min</small></b><span>Planted cloud keys abused in a honeypot test</span><a href="https://comparitech.com/blog/information-security/github-honeypot" target="_blank" rel="noopener">Comparitech ↗</a></div>
-        <div class="stat"><b>0</b><span>Bait-key tools for crypto keys we could find before Tripwire</span><a href="https://github.com/tomcode1000/tripwire-qie/blob/main/docs/REFERENCES.md" target="_blank" rel="noopener">References ↗</a></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- how it works -->
-  <section class="section fade">
-    <div class="shell">
-      <div class="section-head">
-        <span class="kicker">How a trap fires</span>
-        <h2 class="h-display">The bot's speed is what <em>catches it.</em></h2>
-        <p class="section-lede">Scammers use honeypot wallets to rob the greedy. Tripwire turns the trick around: the bait is the alarm, and a bot that grabs it first warns you while your real key is still safe.</p>
-      </div>
-      <ol class="steps">
-        <li><span class="steps-n">01</span><h3 class="h3">Plant</h3><p>Tripwire makes bait keys that look like a real deploy key, each showing a 500 rUSD balance. Put them where a real key could leak: a repo's <span class="mono">.env</span>, notes, CI secrets. Each is labelled with where it went.</p></li>
-        <li><span class="steps-n">02</span><h3 class="h3">Wait</h3><p>Nothing happens until someone uses a bait key. Planting costs nothing on QIE: a transfer is about $0.000004 and the whole system deploys for 0.0042 QIE.</p></li>
-        <li><span class="steps-n">03</span><h3 class="h3">Trip</h3><p>rUSD never leaves a bait wallet. Any transfer, sweep or approval calls the trap instead, in the thief's own transaction. Native-coin sweeps are reported by the keeper.</p></li>
-        <li><span class="steps-n">04</span><h3 class="h3">Respond</h3><p>Your vault locks with the leak's location as the reason. The thief joins the public list. Funds can now only go to your recovery address.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- what a thief can do -->
-  <section class="section fade">
-    <div class="shell">
-      <div class="section-head">
-        <span class="kicker">The vault</span>
-        <h2 class="h-display">What a thief can do with your keys</h2>
-        <p class="section-lede">Your real funds sit in a TripwireVault: a small daily amount goes out instantly, anything larger waits 24 hours and can be cancelled, and every security setting belongs to your cold recovery key.</p>
-      </div>
-      <div class="can">
-        <div class="panel">
-          <div class="who"><span class="key key-on">Bait key</span><span class="key">Everyday key</span><span class="key">Recovery key</span></div>
-          <b class="h3">Takes nothing</b>
-          <p>The bait cannot move. The attempt locks your vault and flags the thief, in the same transaction.</p>
-          <span class="out bad">Thief flagged · vault locked</span>
-        </div>
-        <div class="panel">
-          <div class="who"><span class="key key-on">Bait key</span><span class="key key-on">Everyday key</span><span class="key">Recovery key</span></div>
-          <b class="h3">At most one day's limit</b>
-          <p>Once the bait trips, nothing leaves except to your recovery address, even when the thief calls rescue. A stolen everyday key cannot raise the limit, remove the trap or unlock.</p>
-          <span class="out bad">Thief flagged · vault locked</span>
-        </div>
-        <div class="panel">
-          <div class="who"><span class="key">Bait key</span><span class="key key-on">Everyday key</span><span class="key">Recovery key</span></div>
-          <b class="h3">The 24-hour window</b>
-          <p>The honest limit: if the thief never touches bait, no trap fires. A big withdrawal still waits 24 hours, so a builder who checks once cancels it and loses at most the daily limit.</p>
-          <span class="out">No trip · delay protects</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- evaluation compare -->
-  <section class="section fade">
-    <div class="shell">
-      <div class="section-head">
-        <span class="kicker">Measured, not claimed</span>
-        <h2 class="h-display"><span data-k="eval.runs">50</span> simulated thefts, same keys, two wallets</h2>
-        <p class="section-lede">Each run gives a thief the builder's keys and replays a random strategy against a plain wallet and against Tripwire. 10 QIE per run. Seed <span class="mono" data-k="eval.seed">20261127</span>, reproducible from the repo.</p>
-      </div>
-      <div class="compare">
-        <div class="panel">
-          <span class="kicker">A plain wallet</span>
-          <div class="r-row"><span>Stolen across all runs</span><b class="flag"><span data-k="eval.plainStolen">400</span> QIE</b></div>
-          <div class="r-row"><span>Leaks detected</span><b>0</b></div>
-          <div class="r-row"><span>Where it leaked</span><b>Unknown</b></div>
-          <div class="r-row"><span>Thief known to other apps</span><b>No</b></div>
-        </div>
-        <div class="panel compare-tripwire">
-          <span class="kicker">Tripwire</span>
-          <div class="r-row"><span>Stolen across all runs</span><b class="safe"><span data-k="eval.tripwireStolenReact">13.5</span> QIE <span class="fine">(<span data-k="eval.tripwireStolenWorst">118</span> if the builder never checks)</span></b></div>
-          <div class="r-row"><span>Bait attacks detected</span><b><span data-k="eval.caught">39</span> of <span data-k="eval.baitAttacks">39</span></b></div>
-          <div class="r-row"><span>Where it leaked</span><b>Named in the lock reason</b></div>
-          <div class="r-row"><span>Innocent addresses flagged</span><b data-k="eval.innocentFlagged">0</b></div>
-        </div>
-      </div>
-      <p class="fine" style="margin-top:16px"><a href="evidence.html">Every strategy, every run</a> · <a data-href="src:eval.source" href="#">Method</a></p>
-    </div>
-  </section>
-
-  <!-- the list -->
-  <section class="section fade" id="list">
-    <div class="shell split">
+  <!-- § 01 The problem (mirrors web/img/design/home-sections.jpg) -->
+  <section class="sec fade">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 01</span><span class="eyebrow">THE PROBLEM</span></div></aside>
       <div>
-        <span class="kicker">The list</span>
-        <h2 class="h-display">Every catch protects everyone on QIE</h2>
-        <p class="section-lede">A flag is written only by a trap, in the thief's own transaction, so nobody can be added by someone's claim. Any wallet, app or AI agent can refuse a flagged address with one call before paying it.</p>
-        <p class="fine" style="margin-top:18px">Registry <a class="mono" data-href="addr:contracts.FlagRegistry" data-k="contracts.FlagRegistry" data-fmt="short" href="#">—</a> on QIE testnet · <span id="flagged-count">—</span> addresses flagged so far</p>
-      </div>
-      <div class="panel panel-pad">
-        <span class="kicker">Check an address</span>
-        <form class="check" data-check>
-          <input class="input" placeholder="0x… address to check" aria-label="Address to check" spellcheck="false" autocomplete="off">
-          <button class="btn btn-primary" type="submit">Check</button>
-        </form>
-        <div class="check-out"></div>
-        <div class="codeblock">// in your contract
-require(!IFlagRegistry(REGISTRY).isFlagged(to), "flagged");
-
-// in your app or agent
-await registry.isFlagged(address)  // true = took bait</div>
-        <button class="btn-link" type="button" id="try-thief" style="margin-top:14px">Try the testnet thief's address <span>→</span></button>
+        <div class="sec-head">
+          <h2 class="h2">It's not if your key leaks. It's <em>when.</em></h2>
+          <p class="lede">A <span class="mono">.env</span> pushed by mistake. A key pasted into the wrong chat. A laptop with malware. Bots search for private keys around the clock, and they're faster than you. By the time you notice, the wallet is empty and you have no idea where it leaked.</p>
+        </div>
+        <div class="figures">
+          <div class="fig bad"><b>&lt;100 sec</b><p>A seed phrase pushed to GitHub, drained by bots<a class="fn" href="#n1">1</a></p></div>
+          <div class="fig bad"><b>~2 min</b><p>Leaked access tokens used after going public<a class="fn" href="#n2">2</a></p></div>
+          <div class="fig bad"><b>1 min</b><p>Fake cloud keys abused in a honeypot test<a class="fn" href="#n3">3</a></p></div>
+          <div class="fig"><b>0</b><p>Tools that set bait for crypto keys, until now<a class="fn" href="#n4">4</a></p></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- limits -->
-  <section class="section fade">
-    <div class="shell split">
+  <!-- § 02 How it works -->
+  <section class="sec fade" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 02</span><span class="eyebrow">HOW IT WORKS</span></div></aside>
       <div>
-        <span class="kicker">Said plainly</span>
-        <h2 class="h-display">What Tripwire does not do</h2>
-        <p class="section-lede">Status on <span data-k="builtAt" data-fmt="date">—</span>: contracts live on QIE testnet, <span data-k="tests.passing">65</span> tests passing, not audited. Mainnet deployment is next.</p>
+        <div class="pair" style="margin-bottom:56px">
+          <div>
+            <h2 class="h2">The bot's speed is what <em>catches</em> it.</h2>
+            <p class="lede" style="margin-top:22px">Scammers use fake "free money" wallets to trap greedy people. We flipped the trick. Your bait looks like a real key with money in it. A bot grabs it first, and that's your alarm, while your real key is still safe.</p>
+          </div>
+          <figure class="plate">
+            <div class="plate-img" style="--ar: 2 / 1"><div class="si-leak"></div><img data-opt src="img/leak.jpg" alt="An evidence envelope with a red thread leading out of it"></div>
+            <figcaption>Plate II — Every bait key is labelled with where you hid it. If it's used, that's where you leaked.</figcaption>
+          </figure>
+        </div>
+        <ol class="proc">
+          <li><span class="n">01</span><h3 class="h3">Hide the bait</h3><p>Make fake keys in your browser and hide them where real keys live: your repo's <span class="mono">.env</span>, your notes, your CI secrets.</p></li>
+          <li><span class="n">02</span><h3 class="h3">Carry on building</h3><p>Nothing changes for you. Planting bait costs next to nothing on QIE: a transaction is about $0.000004.</p></li>
+          <li><span class="n">03</span><h3 class="h3">A bot bites</h3><p>The bait balance can't be moved. Any attempt to move it sets off the trap, inside the thief's own transaction.</p></li>
+          <li><span class="n">04</span><h3 class="h3">You're covered</h3><p>Your funds lock, you're told which file leaked, and the thief's address goes on the blocklist.</p></li>
+        </ol>
       </div>
-      <ul class="limits">
-        <li><b>A thief who never touches the bait</b><span>No trap fires. The vault's 24-hour delay is your protection, so keep real funds in the vault.</span></li>
-        <li><b>Bait wallets must hold no real value</b><span>rUSD can't move, but anything real you put in a bait wallet can be swept like any other wallet.</span></li>
-        <li><b>The keeper is a watcher you run</b><span>It can only lock and flag, never move funds. Token trips need no keeper at all.</span></li>
-        <li><b>Bait wallets are tools, not users</b><span>We do not count them as traction.</span></li>
-      </ul>
     </div>
   </section>
+
+  <!-- § 03 Your funds -->
+  <section class="sec fade" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 03</span><span class="eyebrow">YOUR FUNDS</span></div></aside>
+      <div>
+        <div class="pair" style="margin-bottom:48px">
+          <div>
+            <h2 class="h2">Even with your real key, a thief has to <em>wait 24 hours.</em></h2>
+            <p class="lede" style="margin-top:22px">Your real money sits in a Tripwire vault. Small amounts go out instantly. Anything bigger waits 24 hours, and you can cancel it. Only your backup key, the one you keep offline, can change the rules.</p>
+            <p class="body" style="margin-top:16px">Banks have put time locks on vault doors for a hundred years. Same idea: knowing the code isn't enough.</p>
+          </div>
+          <figure class="plate" style="max-width:420px">
+            <div class="plate-img" style="--ar: 4 / 5"><div class="si-timelock"></div><img data-opt src="img/timelock.jpg" alt="A three-dial bank vault time lock"></div>
+            <figcaption>Plate III — A bank-vault time lock. Tripwire's 24-hour wait works the same way.</figcaption>
+          </figure>
+        </div>
+        <div class="matrix-wrap">
+          <table class="matrix">
+            <thead><tr><th>Fake key</th><th>Everyday key</th><th>Backup key</th><th>What someone holding these can do</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td><span class="k on">F</span></td><td><span class="k">E</span></td><td><span class="k">B</span></td><td><p>Nothing. The bait can't move, and the attempt locks your funds and blocklists them.</p></td><td class="res bad">Caught · funds locked</td></tr>
+              <tr><td><span class="k on">F</span></td><td><span class="k on">E</span></td><td><span class="k">B</span></td><td><p>At most one day's limit, and only before the trap fires. After that, money can only go to your backup address, even if they try to "rescue" it.</p></td><td class="res bad">Caught · funds locked</td></tr>
+              <tr><td><span class="k">F</span></td><td><span class="k on">E</span></td><td><span class="k">B</span></td><td><p>The honest limit: no bait touched, so no trap fires. Big withdrawals still wait 24 hours, so you can cancel them.</p></td><td class="res">24-hour wait protects you</td></tr>
+              <tr><td><span class="k">F</span></td><td><span class="k">E</span></td><td><span class="k on">B</span></td><td><p>Everything. It changes settings, unlocks your funds and receives anything rescued.</p></td><td class="res good">You're in control</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- § 04 Proof -->
+  <section class="sec fade" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 04</span><span class="eyebrow">PROOF</span></div></aside>
+      <div>
+        <div class="sec-head">
+          <h2 class="h2">We robbed ourselves <span data-k="eval.runs">50</span> times.</h2>
+          <p class="lede">Same keys, two wallets: a normal one, and one protected by Tripwire. 10 QIE at stake each time, a different attack each time. The test is in the code, so anyone can run it again.<a class="fn" href="#n5">5</a></p>
+        </div>
+        <div class="figures" style="margin-bottom:40px">
+          <div class="fig bad"><b data-k="eval.plainStolen">400</b><p>QIE stolen from normal wallets</p></div>
+          <div class="fig good"><b data-k="eval.tripwireStolenReact">13.5</b><p>QIE stolen with Tripwire, if you check once a day (<span data-k="eval.tripwireStolenWorst">118</span> if you never do)</p></div>
+          <div class="fig"><b><span data-k="eval.caught">39</span>/<span data-k="eval.baitAttacks">39</span></b><p>Attacks that touched the bait, caught</p></div>
+          <div class="fig"><b data-k="eval.innocentFlagged">0</b><p>Innocent addresses blocklisted</p></div>
+        </div>
+        <a class="btn-link" href="evidence.html">See every attack and result <span>→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- § 05 Blocklist -->
+  <section class="sec fade" id="blocklist" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 05</span><span class="eyebrow">THE BLOCKLIST</span></div></aside>
+      <div>
+        <div class="pair">
+          <div>
+            <h2 class="h2">One catch protects <em>everyone</em> on QIE.</h2>
+            <p class="lede" style="margin-top:22px">Only a trap can add an address, inside the thief's own transaction, so nobody gets blocklisted by rumour. Any wallet, app or AI agent can check an address before it pays.</p>
+            <figure class="plate" style="margin-top:32px">
+              <div class="plate-img" style="--ar: 16 / 9"><div class="si-ledger"></div><img data-opt src="img/ledger.jpg" alt="The page edges of a closed archival ledger with an indigo ribbon"></div>
+              <figcaption>Plate IV — A public record anyone can read and only a trap can write.</figcaption>
+            </figure>
+          </div>
+          <div class="panel panel-pad">
+            <span class="eyebrow" style="margin-bottom:14px">Is this address safe to pay?</span>
+            <form class="check" data-check>
+              <input class="input" placeholder="0x…" aria-label="Address to check" spellcheck="false" autocomplete="off">
+              <button class="btn btn-primary" type="submit">Check</button>
+            </form>
+            <div class="check-out"></div>
+            <button class="btn-link" type="button" id="try-thief" style="margin-top:4px">Try the thief from TW-0001 <span>→</span></button>
+            <div class="codeblock">// in a contract: refuse to pay a caught thief
+require(!IFlagRegistry(BLOCKLIST).isFlagged(to), "blocklisted");
+
+// in an app or AI agent
+if (await blocklist.isFlagged(payee)) refuse();</div>
+            <p class="fine" style="margin-top:12px">Blocklist contract <a class="mono u" data-href="addr:contracts.FlagRegistry" data-k="contracts.FlagRegistry" data-fmt="short" href="#">—</a> on QIE testnet. <a class="u" href="registry.html">See everyone caught →</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- § 06 Straight answers -->
+  <section class="sec fade" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 06</span><span class="eyebrow">STRAIGHT ANSWERS</span></div></aside>
+      <div>
+        <div class="sec-head"><h2 class="h2">What Tripwire won't do.</h2>
+          <p class="lede">As of <span data-k="builtAt" data-fmt="day">—</span>: live on QIE testnet, <span data-k="tests.passing">—</span> automated tests passing, not audited yet. Mainnet is next.</p></div>
+        <ul class="statements">
+          <li><b>Catch a thief who never touches the bait</b><span>No trap fires. The 24-hour wait on big withdrawals is what protects you then, so keep your real funds in the vault.</span></li>
+          <li><b>Protect real money in a bait wallet</b><span>The fake balance can't move. Anything real you put there can. Keep bait wallets empty.</span></li>
+          <li><b>Move your money for you</b><span>The watcher that catches native-coin sweeps can only lock and blocklist. It can never send funds anywhere.</span></li>
+          <li><b>Inflate our numbers</b><span>Bait wallets are tools, not users. We don't count them as traction.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing fade" style="border-top:1px solid var(--border)">
+    <div class="shell">
+      <h2 class="display">Hide your first bait before a bot finds your <em>real key.</em></h2>
+      <div class="hero-cta"><a class="btn btn-ink" href="arm.html">Set a trap</a><a class="btn-link" href="evidence.html">How we tested it <span>→</span></a></div>
+    </div>
+  </section>
+
+  <div class="shell">
+    <ol class="notes" aria-label="Sources">
+      <li id="n1"><span>1</span><p>Decrypt, "Hacker steals $1,200 worth of Ethereum in under 100 seconds". <a href="https://decrypt.co/30222/hacker-steals-1200-worth-of-ethereum-in-under-100-seconds" target="_blank" rel="noopener">decrypt.co</a></p></li>
+      <li id="n2"><span>2</span><p>Cybenari research, as reported by ThreatDown, "Gone in 60 seconds". <a href="https://www.threatdown.com/blog/you-have-one-minute-to-save-your-leaked-aws-credentials/" target="_blank" rel="noopener">threatdown.com</a></p></li>
+      <li id="n3"><span>3</span><p>Comparitech, AWS keys planted on GitHub as a honeypot. <a href="https://comparitech.com/blog/information-security/github-honeypot" target="_blank" rel="noopener">comparitech.com</a></p></li>
+      <li id="n4"><span>4</span><p>Web and GitHub search, 27 November 2026: bait credentials exist for cloud keys, none found for crypto private keys. <a href="https://github.com/tomcode1000/tripwire-qie/blob/main/docs/REFERENCES.md" target="_blank" rel="noopener">References</a></p></li>
+      <li id="n5"><span>5</span><p>The attack test, its method and every run. <a data-href="src:eval.source" href="#">EVAL.md</a></p></li>
+    </ol>
+  </div>
 </main>
 
 <div data-chrome="foot"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
 <script src="assets/site.js"></script>
 <script>
-  document.addEventListener("tw:data", async (e) => {
-    const d = e.detail;
+  document.addEventListener("tw:data", (e) => {
     document.getElementById("try-thief").onclick = () => {
       const f = document.querySelector("[data-check]");
-      f.querySelector("input").value = d.liveTrip.thief;
+      f.querySelector("input").value = e.detail.liveTrip.thief;
       f.requestSubmit();
     };
-    try {
-      const r = await TW.registry();
-      document.getElementById("flagged-count").textContent = (await r.flaggedCount()).toString();
-    } catch {
-      document.getElementById("flagged-count").textContent = "(registry unreachable)";
-    }
   });
 </script>
 </body>
