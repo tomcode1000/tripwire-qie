@@ -5,20 +5,29 @@ term only where a builder needs it, and explained the first time.
 
 ## What it is (always first, before any hook)
 
-**Tripwire is a crypto wallet with a burglar alarm.**
+**Tripwire is the theft-alarm layer for QIE.**
 
-A judge, a user or an investor must be able to repeat that back after one read. Say it before anything clever.
+Category: **security infrastructure** (QIE Hackathon track: Developer Infrastructure & Tooling). It is a
+layer, not an app and not an agent: on-chain parts that anyone on QIE can use or build on.
+AI agents are *users* of the layer (they check the blocklist before paying); never call Tripwire an agent.
+
+## The analogy (right after the category)
+
+**Think of it as a burglar alarm for crypto wallets.**
 
 ## One line (what it does)
 
-**Tripwire gives you fake keys to hide where real keys get stolen. If anyone uses one, your wallet locks
-itself before they can reach your money, the thief is blocklisted across QIE, and you see exactly where you leaked.**
+**Tripwire hides fake keys where real keys get stolen. If anyone uses one, the owner's funds lock in the
+same transaction, and the thief lands on a public blocklist that every wallet, app and AI agent on QIE can check.**
 
-## In 10 seconds (three steps, always in this order)
+## Three parts, one layer (always in this order)
 
-1. **Hide fake keys** where real keys leak: your code, your notes, your laptop.
-2. **A thief uses one**: a bot scanning GitHub, or a hacker on your laptop.
-3. **Your wallet locks**: in the same second, your money is frozen, the thief is blocklisted, you're told which file leaked.
+1. **Detect**: fake keys whose balance can't move. Using one sets off the trap inside the thief's own transaction.
+2. **Respond**: the owner's vault locks; money can only go to their offline backup key; they're told which file leaked.
+3. **Share**: the thief goes on a public blocklist any wallet, app, contract or AI agent checks with one call. One catch protects everyone.
+
+Why "layer" and not "wallet": the vault is one part. The blocklist is what makes it infrastructure,
+because every catch protects every app on QIE, not only the person who set the trap.
 
 ## The tagline (the hook, after the plain statement)
 
@@ -26,7 +35,7 @@ itself before they can reach your money, the thief is blocklisted across QIE, an
 
 ## Order of a pitch
 
-What it is → what it does → the 3 steps → the proof number → the hook. Never open with the hook alone.
+Category → analogy → what it does → the 3 parts → the proof number → the hook. Never open with the hook alone.
 
 ## The relatable moment (open with this)
 

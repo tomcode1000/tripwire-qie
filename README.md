@@ -1,12 +1,14 @@
 # Tripwire
 
-**A crypto wallet with a burglar alarm.**
+**The theft-alarm layer for QIE.** Think of it as a burglar alarm for crypto wallets.
 
-Tripwire gives you fake keys to hide where real keys get stolen: your code, your notes, your laptop. If anyone uses one, your wallet locks itself before they can reach your money, the thief is blocklisted across QIE, and you see exactly where you leaked.
+Tripwire hides fake keys where real keys get stolen. If anyone uses one, the owner's funds lock in the same transaction, and the thief lands on a public blocklist that every wallet, app and AI agent on QIE can check.
 
-1. **Hide fake keys** where real keys leak.
-2. **A thief uses one**: a bot scanning GitHub, or a hacker on your laptop.
-3. **Your wallet locks**: in the same second, your money is frozen, the thief is blocklisted, you're told which file leaked.
+Three parts, one layer:
+
+1. **Detect**: fake keys whose $500 balance can't move. Using one sets off the trap inside the thief's own transaction.
+2. **Respond**: the owner's Tripwire vault locks. Money can then only go to their offline backup key, and they're told which file leaked.
+3. **Share**: the thief goes on a public blocklist. Any wallet, app, contract or AI agent refuses them with one call (`isFlagged(address)`).
 
 *Leave a key. Catch the thief.*
 

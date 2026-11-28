@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tripwire · A crypto wallet with a burglar alarm</title>
-<meta name="description" content="Tripwire is a crypto wallet with a burglar alarm. Hide fake keys where real keys get stolen; if anyone uses one, your wallet locks itself, the thief is blocklisted, and you see where you leaked.">
-<meta property="og:title" content="Tripwire · A crypto wallet with a burglar alarm">
+<title>Tripwire · The theft-alarm layer for QIE</title>
+<meta name="description" content="Tripwire is the theft-alarm layer for QIE: fake keys that detect a theft, a vault that locks itself, and a public blocklist every wallet, app and AI agent can check.">
+<meta property="og:title" content="Tripwire · The theft-alarm layer for QIE">
 <meta property="og:description" content="Hide fake keys next to your real ones. The moment someone uses one, your money locks, the thief is blocklisted, and you know which file leaked.">
 <meta property="og:image" content="img/hero-light.jpg">
 <script>try{const t=localStorage.getItem("tripwire-theme");if(t)document.documentElement.dataset.theme=t}catch{}</script>
@@ -29,9 +29,9 @@
     <span class="plate-cap">Plate I — A tripwire, steel and brass.</span>
     <div class="shell hero-in">
       <div class="hero-copy">
-        <span class="eyebrow">Tripwire · Leave a key. Catch the thief.</span>
-        <h1 class="display">A crypto wallet with a <em>burglar alarm.</em></h1>
-        <p class="lede">Tripwire gives you fake keys to hide where real keys get stolen. If anyone uses one, your wallet locks itself before they can reach your money, the thief is blocklisted across QIE, and you see exactly where you leaked.</p>
+        <span class="eyebrow">Security infrastructure for QIE</span>
+        <h1 class="display">The theft-alarm layer <em>for QIE.</em></h1>
+        <p class="lede">Think of it as a burglar alarm for crypto wallets. Tripwire hides fake keys where real keys get stolen. If anyone uses one, the owner's funds lock in the same transaction, and the thief lands on a public blocklist that every wallet, app and AI agent on QIE can check.</p>
         <div class="hero-cta">
           <a class="btn btn-ink" href="arm.html">Set your alarm</a>
           <a class="btn-link" href="incident.html">Watch it catch a thief <span>→</span></a>
@@ -56,11 +56,11 @@
   <!-- The product in 10 seconds: what a judge must get before anything else -->
   <section class="tensec" aria-label="How Tripwire works in 10 seconds">
     <div class="shell">
-      <span class="eyebrow">How it works, in 10 seconds</span>
+      <span class="eyebrow">Three parts, one layer</span>
       <ol class="tensec-steps">
-        <li><span class="n">1</span><div><b>Hide fake keys</b><p>Put them where real keys leak: your code, your notes, your laptop. Each looks like a wallet with $500 in it.</p></div></li>
-        <li><span class="n">2</span><div><b>A thief uses one</b><p>A bot scanning GitHub, or a hacker on your laptop, grabs the fake key and tries to take the money.</p></div></li>
-        <li class="last"><span class="n">3</span><div><b>Your wallet locks</b><p>In that same second: your real money is frozen, the thief is blocklisted, and you're told which file leaked.</p></div></li>
+        <li><span class="n">1</span><div><b>Detect</b><p>Fake keys you hide where real keys leak: your code, your notes, your laptop. Each looks like a wallet with $500 in it, but the money can't move. Using one sets off the trap.</p></div></li>
+        <li><span class="n">2</span><div><b>Respond</b><p>The owner's Tripwire vault locks in that same transaction. From then on, money can only go to their offline backup key, and they're told which file leaked.</p></div></li>
+        <li class="last"><span class="n">3</span><div><b>Share</b><p>The thief goes on a public blocklist. Any wallet, app, contract or AI agent on QIE refuses them with one call. One catch protects everyone.</p></div></li>
       </ol>
     </div>
   </section>
