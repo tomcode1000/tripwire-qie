@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-27T16:39:22.342Z",
+  "builtAt": "2026-11-28T13:03:52.193Z",
   "repo": "https://github.com/tomcode1000/tripwire-qie",
   "network": {
     "name": "QIE testnet",
@@ -96,7 +96,7 @@
     "rawReact": "https://github.com/tomcode1000/tripwire-qie/blob/main/docs/runs/2026-11-27-eval-builder-reacts.json"
   },
   "tests": {
-    "passing": 65,
+    "passing": 72,
     "failing": 0,
     "coverage": {
       "lines": 100,

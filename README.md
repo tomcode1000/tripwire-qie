@@ -12,6 +12,27 @@ Three parts, one layer:
 
 *Leave a key. Catch the thief.*
 
+**Live site: [tripwire.54-255-109-186.sslip.io](https://tripwire.54-255-109-186.sslip.io)** · contracts live on QIE testnet · [full getting-started guide](docs/GETTING-STARTED.md)
+
+## Get started
+
+| I want to… | Do this |
+|---|---|
+| Protect my wallet, no code | Open **[Set your alarm](https://tripwire.54-255-109-186.sslip.io/arm.html)** and follow the five steps |
+| Protect my wallet or my AI agent's wallet from a terminal | `npx github:tomcode1000/tripwire-qie --help` (no install) |
+| Refuse to pay thieves in my contract, app or agent | `require(!IFlagRegistry(0xbFC0…6F94).isFlagged(to))`, see [the guide](docs/GETTING-STARTED.md#3-check-the-blocklist-in-your-contract-app-or-agent) |
+| Catch bots that sweep a fake key's QIE | `npx github:tomcode1000/tripwire-qie watch --trap <trap>` |
+
+```bash
+export TRIPWIRE_KEY=0x...          # everyday key (owns the vault)
+npx github:tomcode1000/tripwire-qie vault --backup 0xYourOfflineBackup --delay 24h
+npx github:tomcode1000/tripwire-qie bait --label "github:my-repo/.env" --label "notes:keys.txt"
+export TRIPWIRE_BACKUP_KEY=0x...   # offline backup key (sets the trap)
+npx github:tomcode1000/tripwire-qie arm --vault 0xYourVault
+npx github:tomcode1000/tripwire-qie check 0xSomeAddress   # exit 2 = blocklisted
+```
+
+
 [![CI](https://github.com/tomcode1000/tripwire-qie/actions/workflows/ci.yml/badge.svg)](https://github.com/tomcode1000/tripwire-qie/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/tomcode1000/tripwire-qie/actions/workflows/codeql.yml/badge.svg)](https://github.com/tomcode1000/tripwire-qie/actions/workflows/codeql.yml)
 [![Tests](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/tomcode1000/tripwire-qie/main/docs/assets/test-summary.json)](docs/assets/test-summary.json)
@@ -34,13 +55,15 @@ QIE Blockchain Hackathon 3.0 · Track: Developer Infrastructure & Tooling
 | A trip locks the vault, flags the taker and names the leaked file | [`test/Trap.test.js`](test/Trap.test.js) |
 | Bots that sweep native QIE are caught by the keeper | [`test/Keeper.test.js`](test/Keeper.test.js); **live on testnet:** [sweep](https://testnet.qie.digital/tx/0x52c580772aebdab1ba5f951fdf298fb5fa689f08c0ff78038f6494c448f2124e) → [keeper report](https://testnet.qie.digital/tx/0xba110156b50b8eac76b8b3839920ee35eb5a47b79f26c2f02dc67e978d6dacaa) about 7.7 s later ([record](docs/runs/2026-11-27-qieTestnet-keeper-sweep.json)) |
 | A thief holding the owner key cannot drain the vault or weaken its settings | [`test/TripwireVault.test.js`](test/TripwireVault.test.js) ("the thief scenario") |
-| 65 tests, 100% line / 94% branch coverage | [`docs/assets/test-summary.json`](docs/assets/test-summary.json), [`docs/assets/test-report.txt`](docs/assets/test-report.txt), CI badge above |
+| 72 tests, 100% line / 94% branch coverage | [`docs/assets/test-summary.json`](docs/assets/test-summary.json), [`docs/assets/test-report.txt`](docs/assets/test-report.txt), CI badge above |
 | Leaked keys are drained in seconds; bait keys exist for cloud, not crypto | [`docs/REFERENCES.md`](docs/REFERENCES.md) |
 | QIE costs about $0.000004 per transfer, so planting bait is free | [`docs/runs/`](docs/runs/) (dated measurements) |
 | **Live trip on QIE testnet:** a stolen bait key moved bait, the vault locked with reason `github:demo-repo/.env`, the thief was flagged, and the bait never moved | [thief's tx](https://testnet.qie.digital/tx/0xb26388ac68e178d19b447b7496fffb1e9d7204be99520f9dc1af7f8235cd7a04), full record [`docs/runs/2026-11-27-qieTestnet-live-trip.json`](docs/runs/2026-11-27-qieTestnet-live-trip.json) |
 | Testnet contracts (chain 1983) | FlagRegistry [`0xbFC0…6F94`](https://testnet.qie.digital/address/0xbFC006A0Becf8Dc567C09AA1f5A86fadeDA36F94), TripwireFactory [`0x1188…54A6`](https://testnet.qie.digital/address/0x11888A9E56aeea05D3A1546942B477D6365554A6), BaitToken [`0xdC73…e0BB`](https://testnet.qie.digital/address/0xdC73612Bc7a958C934495b2Ba2D5f5F6Ec22e0BB) ([`deployments/qieTestnet.json`](deployments/qieTestnet.json)) |
 | Mainnet contracts | _pending deployment_ |
-| Live dashboard and demo video | _pending_ |
+| Live site | [tripwire.54-255-109-186.sslip.io](https://tripwire.54-255-109-186.sslip.io) |
+| CLI run on QIE testnet (vault, bait, arm, status, check) | [`docs/runs/2026-11-28-qieTestnet-cli-run.json`](docs/runs/2026-11-28-qieTestnet-cli-run.json) |
+| Demo video | _pending_ |
 
 ## The problem
 
@@ -72,7 +95,7 @@ Bots that sweep native QIE instead of tokens are handled by an optional **keeper
 
 ```bash
 npm ci --legacy-peer-deps
-npx hardhat test            # 65 tests
+npx hardhat test            # 72 tests
 npx hardhat coverage        # coverage report
 npm run test:summary        # writes docs/assets/test-summary.json
 npx hardhat run scripts/deploy.js   # local deploy, prints gas used

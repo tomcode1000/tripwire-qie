@@ -1,22 +1,31 @@
 
 
   BaitToken: bait never leaves, every attempt trips the trap
-    ✔ shows a 500 rUSD balance in each bait wallet (1654ms)
-    ✔ transfer() does not revert, does not move the balance, and trips the trap (112ms)
-    ✔ emits BaitTaken with the attempted amount (103ms)
-    ✔ approve() from a bait wallet trips the trap and flags the spender (89ms)
-    ✔ transferFrom() by a sweeper contract/spender trips the trap and flags the destination (92ms)
-    ✔ only the factory can arm bait (114ms)
-    ✔ each bait trips its own label (89ms)
-    ✔ repeated attempts are all recorded (100ms)
-    ✔ transfer to the zero address is rejected by ERC-20 rules before any trip (88ms)
+    ✔ shows a 500 rUSD balance in each bait wallet (1632ms)
+    ✔ transfer() does not revert, does not move the balance, and trips the trap (153ms)
+    ✔ emits BaitTaken with the attempted amount (122ms)
+    ✔ approve() from a bait wallet trips the trap and flags the spender (113ms)
+    ✔ transferFrom() by a sweeper contract/spender trips the trap and flags the destination (124ms)
+    ✔ only the factory can arm bait (123ms)
+    ✔ each bait trips its own label (117ms)
+    ✔ repeated attempts are all recorded (133ms)
+    ✔ transfer to the zero address is rejected by ERC-20 rules before any trip (111ms)
+
+  CLI helpers
+    ✔ parseDelay reads hours, days and seconds within the vault's limits
+    ✔ checkLabel requires a label of at most 31 bytes
+    ✔ bait files look exactly like a real deploy config
+    ✔ blockWindows never exceeds the RPC's 10,000-block limit and covers the whole range (55ms)
+    ✔ parseArgs reads positionals, flags, repeated flags and booleans
+    ✔ loadNetwork returns the testnet deployment and refuses unknown networks
+    ✔ the bait command writes .env files and a baits.json without private keys (142ms)
 
   FlagRegistry: public list of bait takers
-    ✔ starts empty and answers isFlagged for anyone (79ms)
-    ✔ records first and last seen, count, trap and bait (86ms)
-    ✔ only registered traps can flag (78ms)
-    ✔ only the factory can register traps (95ms)
-    ✔ factory can be set once, only by the deployer, never to zero
+    ✔ starts empty and answers isFlagged for anyone (96ms)
+    ✔ records first and last seen, count, trap and bait (126ms)
+    ✔ only registered traps can flag (96ms)
+    ✔ only the factory can register traps (93ms)
+    ✔ factory can be set once, only by the deployer, never to zero (49ms)
     ✔ a registered trap cannot flag the zero address
 
   Keeper: catches native-coin sweeps from bait wallets
@@ -25,67 +34,67 @@
       ✔ ignores incoming transfers to bait (funding bait is not a theft)
       ✔ handles empty blocks and missing senders
     Keeper on a chain
-      ✔ a native sweep from bait is reported: vault locks, thief flagged (114ms)
-      ✔ does not report the same sweep twice (95ms)
-      ✔ blocks without bait activity produce no reports (71ms)
-      ✔ a keeper key that is not the trap's keeper cannot report (84ms)
+      ✔ a native sweep from bait is reported: vault locks, thief flagged (119ms)
+      ✔ does not report the same sweep twice (98ms)
+      ✔ blocks without bait activity produce no reports (97ms)
+      ✔ a keeper key that is not the trap's keeper cannot report (108ms)
 
   Sweeper bots: the drainer pattern trips the trap at both steps
-    ✔ step 1: approving the sweeper trips the trap and flags the sweeper contract (106ms)
-    ✔ step 2: the sweep trips again, flags the attacker, and moves no bait (103ms)
-    ✔ a sweep that skips approve still cannot move bait (no allowance) and does not revert other tokens (85ms)
-    ✔ after the trip, any app can refuse the attacker with one call (102ms)
+    ✔ step 1: approving the sweeper trips the trap and flags the sweeper contract (128ms)
+    ✔ step 2: the sweep trips again, flags the attacker, and moves no bait (143ms)
+    ✔ a sweep that skips approve still cannot move bait (no allowance) and does not revert other tokens (123ms)
+    ✔ after the trip, any app can refuse the attacker with one call (128ms)
 
   Trap: a trip locks the vault, flags the taker and names the leak
-    ✔ records the trip and locks the vault with the leak label as reason (101ms)
-    ✔ keeper can report a native-coin sweep (lock + flag, no funds moved) (115ms)
-    ✔ only the keeper can report sweeps (88ms)
-    ✔ only the bait token can trip by token (74ms)
-    ✔ unknown bait cannot be tripped (no fake flags against innocent addresses) (68ms)
-    ✔ a trip still flags the taker when the trap is not a guardian (lock fails safely) (95ms)
-    ✔ a second trip on a locked vault does not revert (67ms)
-    ✔ owner can add more bait; duplicates and empty labels are rejected (179ms)
-    ✔ strangers cannot add bait, change keeper or set the bait token (89ms)
-    ✔ owner can rotate or remove the keeper (96ms)
-    ✔ constructor rejects zero addresses (96ms)
+    ✔ records the trip and locks the vault with the leak label as reason (116ms)
+    ✔ keeper can report a native-coin sweep (lock + flag, no funds moved) (118ms)
+    ✔ only the keeper can report sweeps (87ms)
+    ✔ only the bait token can trip by token (83ms)
+    ✔ unknown bait cannot be tripped (no fake flags against innocent addresses) (79ms)
+    ✔ a trip still flags the taker when the trap is not a guardian (lock fails safely) (99ms)
+    ✔ a second trip on a locked vault does not revert (83ms)
+    ✔ owner can add more bait; duplicates and empty labels are rejected (114ms)
+    ✔ strangers cannot add bait, change keeper or set the bait token (76ms)
+    ✔ owner can rotate or remove the keeper (100ms)
+    ✔ constructor rejects zero addresses (101ms)
 
   TripwireFactory: arm a builder in one transaction
-    ✔ creates a vault owned by the caller with the given recovery and delay (79ms)
-    ✔ arms a trap, registers it and mints bait to every bait wallet (89ms)
-    ✔ only the vault's recovery address can arm it (86ms)
-    ✔ rejects empty or mismatched bait lists (84ms)
-    ✔ emits Armed and VaultCreated (105ms)
-    ✔ two builders' traps are independent (100ms)
+    ✔ creates a vault owned by the caller with the given recovery and delay (90ms)
+    ✔ arms a trap, registers it and mints bait to every bait wallet (108ms)
+    ✔ only the vault's recovery address can arm it (107ms)
+    ✔ rejects empty or mismatched bait lists (99ms)
+    ✔ emits Armed and VaultCreated (122ms)
+    ✔ two builders' traps are independent (130ms)
 
   TripwireVault: real funds, delayed big withdrawals, lock and rescue
     instant withdrawals within the daily limit
-      ✔ owner can withdraw up to the limit (98ms)
-      ✔ rejects amounts over today's remaining limit (84ms)
-      ✔ limit resets the next day (112ms)
-      ✔ a token with no limit set cannot be withdrawn instantly (79ms)
-      ✔ only the owner can withdraw, never to the zero address (70ms)
+      ✔ owner can withdraw up to the limit (95ms)
+      ✔ rejects amounts over today's remaining limit (110ms)
+      ✔ limit resets the next day (98ms)
+      ✔ a token with no limit set cannot be withdrawn instantly (95ms)
+      ✔ only the owner can withdraw, never to the zero address (80ms)
     delayed withdrawals
       ✔ a big withdrawal waits for the delay, then pays out (96ms)
-      ✔ owner or recovery can cancel; strangers cannot (85ms)
-      ✔ requests reject the zero address and non-owners (85ms)
+      ✔ owner or recovery can cancel; strangers cannot (96ms)
+      ✔ requests reject the zero address and non-owners (81ms)
     the thief scenario
-      ✔ bait taken -> vault locked -> thief's queued drain can never execute (99ms)
-      ✔ rescue sends everything to recovery, even when the owner key calls it (84ms)
-      ✔ rescue works for ERC-20 (e.g. QUSDC) too (87ms)
-      ✔ rescue is impossible while unlocked and for strangers (71ms)
-      ✔ a stolen owner key cannot weaken settings (all settings are recovery-only) (76ms)
+      ✔ bait taken -> vault locked -> thief's queued drain can never execute (101ms)
+      ✔ rescue sends everything to recovery, even when the owner key calls it (89ms)
+      ✔ rescue works for ERC-20 (e.g. QUSDC) too (108ms)
+      ✔ rescue is impossible while unlocked and for strangers (80ms)
+      ✔ a stolen owner key cannot weaken settings (all settings are recovery-only) (92ms)
     lock and unlock
-      ✔ owner, recovery and guardians can lock; strangers cannot (78ms)
-      ✔ locking twice is a no-op, not an error (76ms)
-      ✔ only recovery can unlock, and only when locked (86ms)
+      ✔ owner, recovery and guardians can lock; strangers cannot (82ms)
+      ✔ locking twice is a no-op, not an error (75ms)
+      ✔ only recovery can unlock, and only when locked (98ms)
     settings
-      ✔ recovery can change delay within bounds (91ms)
-      ✔ recovery can rotate itself, never to zero (94ms)
-      ✔ guardian cannot be the zero address (70ms)
+      ✔ recovery can change delay within bounds (86ms)
+      ✔ recovery can rotate itself, never to zero (82ms)
+      ✔ guardian cannot be the zero address (74ms)
       ✔ constructor validates owner, recovery and delay
       ✔ deposit rejects the native pseudo-address (74ms)
-      ✔ a payee that rejects native coin makes the withdrawal revert (no silent loss) (79ms)
+      ✔ a payee that rejects native coin makes the withdrawal revert (no silent loss) (84ms)
 
 
-  65 passing (7s)
+  72 passing (8s)
 
