@@ -1,6 +1,6 @@
 # Tripwire
 
-**The theft-alarm layer for QIE.** Think of it as a burglar alarm for crypto wallets.
+**The theft-alarm layer for QIE.** Think of it as a burglar alarm for crypto wallets, whether a person or an AI agent holds the key.
 
 Tripwire hides fake keys where real keys get stolen. If anyone uses one, the owner's funds lock in the same transaction, and the thief lands on a public blocklist that every wallet, app and AI agent on QIE can check.
 

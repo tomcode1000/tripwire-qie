@@ -15,6 +15,14 @@ AI agents are *users* of the layer (they check the blocklist before paying); nev
 
 **Think of it as a burglar alarm for crypto wallets.**
 
+## Who it's for
+
+**Any wallet on QIE, whether a person or an AI agent holds the key.**
+
+- People and builders: keys leak from repos, notes, chats and infected laptops.
+- AI agents: their private keys live in `.env` files and on servers, exactly where bots look, and exactly
+  where bait works. Agents also use the layer a second way: they check the blocklist before they pay anyone.
+
 ## One line (what it does)
 
 **Tripwire hides fake keys where real keys get stolen. If anyone uses one, the owner's funds lock in the
