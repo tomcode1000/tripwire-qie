@@ -175,7 +175,17 @@
     if (flagEvents) return flagEvents;
     const d = await TW.data;
     const r = await TW.registry();
-    flagEvents = await r.queryFilter(r.filters.Flagged(), d.contracts.deployBlockHint);
+    // QIE's RPC rejects log queries wider than 10,000 blocks, so read the history in windows.
+    const STEP = 9_999;
+    const head = await (await TW.provider()).getBlockNumber();
+    const windows = [];
+    for (let from = d.contracts.deployBlockHint; from <= head; from += STEP + 1) windows.push([from, Math.min(from + STEP, head)]);
+    const out = [];
+    for (let i = 0; i < windows.length; i += 4) {
+      const batch = await Promise.all(windows.slice(i, i + 4).map(([a, b]) => r.queryFilter(r.filters.Flagged(), a, b)));
+      batch.forEach((evs) => out.push(...evs));
+    }
+    flagEvents = out.sort((a, b) => a.blockNumber - b.blockNumber || a.index - b.index);
     return flagEvents;
   };
 
