@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Developers · Tripwire</title>
+<meta name="description" content="Use Tripwire from the website, the command line, your contract, your app or your AI agent. Everything runs on QIE testnet today.">
+<script>try{const t=localStorage.getItem("tripwire-theme");if(t)document.documentElement.dataset.theme=t}catch{}</script>
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap">
+<link rel="stylesheet" href="assets/tripwire.css">
+</head>
+<body data-page="developers.html">
+<div data-chrome="head"></div>
+
+<main>
+  <div class="shell">
+    <header class="page-head" style="border-bottom:0;padding-bottom:36px">
+      <span class="eyebrow" style="font-family:var(--mono);font-weight:500;letter-spacing:.06em;color:var(--ink-2)">DEVELOPERS</span>
+      <h1 class="display" style="margin-top:14px">Four ways in. <em>One command</em> to start.</h1>
+      <p class="lede">From no code to your own contract: protect a wallet, protect your AI agent's wallet, or refuse to pay thieves. Everything runs on QIE testnet today; mainnet is next.</p>
+      <div class="codeblock" style="max-width:640px">npx github:tomcode1000/tripwire-qie --help</div>
+    </header>
+  </div>
+
+  <section class="sec fade" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 01</span><span class="eyebrow">TWO KEYS</span></div></aside>
+      <div>
+        <div class="sec-head"><h2 class="h2">You need two keys. <em>Only one</em> can leak.</h2></div>
+        <ul class="statements">
+          <li><b>Everyday key</b><span>The wallet you deploy with, the one that could leak. It owns your vault and can take out a small daily amount.</span></li>
+          <li><b>Backup key</b><span>A different wallet you keep offline. It controls the vault's rules, receives anything rescued, and sets the trap. A thief with your everyday key can't change anything.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec fade" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 02</span><span class="eyebrow">COMMAND LINE</span></div></aside>
+      <div>
+        <div class="sec-head">
+          <h2 class="h2">Protect a wallet, or an AI agent's wallet, from a terminal.</h2>
+          <p class="lede">No install, Node 18 or newer. Keys are read from environment variables, never typed on the command line.</p>
+        </div>
+        <div class="codeblock" style="margin-top:0"># 1. Create your vault. Big withdrawals will wait 24 hours.
+export TRIPWIRE_KEY=0x...            # everyday key
+npx github:tomcode1000/tripwire-qie vault --backup 0xYourBackupAddress --delay 24h
+
+# 2. Make fake keys, offline. Each label says where you'll hide it.
+npx github:tomcode1000/tripwire-qie bait --label "github:my-repo/.env" --label "notes:keys.txt"
+
+# 3. Set the trap and let it lock your vault. Signed by your backup key.
+export TRIPWIRE_BACKUP_KEY=0x...
+npx github:tomcode1000/tripwire-qie arm --vault 0xYourVault
+
+# 4. Hide each .env file where its label says, then check on it any time.
+npx github:tomcode1000/tripwire-qie status --trap 0xYourTrap</div>
+        <p class="fine" style="margin-top:14px">For AI agents: plant a fake key next to the agent's real one on its server, keep its funds in a vault, and run <span class="mono">check &lt;payee&gt;</span> before every payment. Exit code 2 means don't pay. A full run of these commands on QIE testnet: <a class="u" href="https://github.com/tomcode1000/tripwire-qie/blob/main/docs/runs/2026-11-28-qieTestnet-cli-run.json" target="_blank" rel="noopener">recorded here</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec fade" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 03</span><span class="eyebrow">THE BLOCKLIST</span></div></aside>
+      <div>
+        <div class="sec-head">
+          <h2 class="h2">Refuse to pay a caught thief, in one line.</h2>
+          <p class="lede">Free to read from any contract, app or agent. Blocklist on QIE testnet: <a class="mono u" data-href="addr:contracts.FlagRegistry" data-k="contracts.FlagRegistry" href="#">0xbFC006A0Becf8Dc567C09AA1f5A86fadeDA36F94</a></p>
+        </div>
+        <div class="codeblock" style="margin-top:0">// Solidity
+interface IFlagRegistry { function isFlagged(address who) external view returns (bool); }
+require(!IFlagRegistry(BLOCKLIST).isFlagged(to), "blocklisted by Tripwire");
+
+// ethers v6, in an app or an AI agent
+const list = new ethers.Contract(BLOCKLIST, ["function isFlagged(address) view returns (bool)"], provider);
+if (await list.isFlagged(payee)) throw new Error("payee is on the Tripwire blocklist");
+
+// shell, in a deploy or payout script
+npx github:tomcode1000/tripwire-qie check $PAYEE || exit 1</div>
+        <p class="fine" style="margin-top:14px">Reading the history of catches: QIE's RPC rejects log queries wider than 10,000 blocks, so read <span class="mono">Flagged</span> events in windows.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec fade" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 04</span><span class="eyebrow">THE WATCHER</span></div></aside>
+      <div>
+        <div class="sec-head">
+          <h2 class="h2">Catch bots that sweep a fake key's QIE.</h2>
+          <p class="lede">A sweep of native QIE is a plain transfer no contract sees. The watcher scans each block for transactions from your fake keys and reports them. It can only lock and blocklist, never move funds.</p>
+        </div>
+        <div class="codeblock" style="margin-top:0">export TRIPWIRE_KEEPER_KEY=0x...     # a small wallet with a little QIE for gas
+npx github:tomcode1000/tripwire-qie watch --trap 0xYourTrap</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec fade" style="border-top:1px solid var(--border)">
+    <div class="shell sec-grid">
+      <aside class="rail"><div class="rail-in"><span class="no">§ 05</span><span class="eyebrow">FROM SOURCE</span></div></aside>
+      <div>
+        <div class="sec-head"><h2 class="h2">Read it, test it, deploy your own.</h2></div>
+        <div class="codeblock" style="margin-top:0">git clone https://github.com/tomcode1000/tripwire-qie && cd tripwire-qie
+npm ci --legacy-peer-deps
+npx hardhat test                       # <span data-k="tests.passing">72</span> tests
+npx hardhat run scripts/eval.js        # the 50-theft attack evaluation
+npx hardhat run scripts/deploy.js      # add --network qieTestnet with DEPLOYER_KEY set</div>
+        <p class="fine" style="margin-top:14px">Full guide: <a class="u" href="https://github.com/tomcode1000/tripwire-qie/blob/main/docs/GETTING-STARTED.md" target="_blank" rel="noopener">GETTING-STARTED.md</a> · no code instead? <a class="u" href="arm.html">Set your alarm</a> in the browser.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div data-chrome="foot"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

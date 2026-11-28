@@ -19,6 +19,7 @@
     ["incident.html", "Incidents"],
     ["registry.html", "Blocklist"],
     ["evidence.html", "Proof"],
+    ["developers.html", "Developers"],
     ["arm.html", "Set your alarm"],
   ];
   const head = $("[data-chrome=head]");
@@ -89,7 +90,7 @@
           <p class="fine">Tripwire hides fake keys next to your real ones. The moment someone uses one, your money locks, the thief is blocklisted, and you know exactly which file leaked.</p>
         </div>
         <div class="foot-cols">
-          <div><span>Product</span><a href="incident.html">Incidents</a><a href="registry.html">Blocklist</a><a href="arm.html">Set your alarm</a></div>
+          <div><span>Product</span><a href="developers.html">Developers</a><a href="incident.html">Incidents</a><a href="registry.html">Blocklist</a><a href="arm.html">Set your alarm</a></div>
           <div><span>Proof</span><a href="evidence.html">How we tested it</a><a href="${REPO}/blob/main/docs/EVAL.md">Attack evaluation</a><a href="${REPO}/blob/main/docs/REFERENCES.md">References</a></div>
           <div><span>Source</span><a href="${REPO}">GitHub</a><a href="${REPO}/actions">CI runs</a><a href="https://testnet.qie.digital">QIE explorer</a></div>
         </div>
