@@ -1,15 +1,15 @@
 {
   "name": "tripwire-qie",
   "version": "1.0.0",
-  "description": "Bait keys for builders on QIE: a stolen bait key locks your vault, flags the thief and tells you where you leaked.",
-  "main": "index.js",
+  "description": "The theft-alarm layer for QIE: fake keys that catch thieves, a vault that locks itself, and a public blocklist.",
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test",
     "coverage": "hardhat coverage",
     "test:summary": "node scripts/test-summary.js",
     "site:data": "node scripts/build-site-data.js",
-    "site:serve": "node scripts/build-site-data.js && npx --yes http-server@14.1.1 web -p 5177 -c-1"
+    "site:serve": "node scripts/build-site-data.js && npx --yes http-server@14.1.1 web -p 5177 -c-1",
+    "tripwire": "node bin/tripwire.js"
   },
   "keywords": [],
   "author": "",
@@ -20,8 +20,17 @@
     "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
     "@openzeppelin/contracts": "^5.1.0",
     "chai": "^4.5.0",
-    "ethers": "^6.13.4",
     "hardhat": "^2.22.17",
     "solidity-coverage": "^0.8.14"
+  },
+  "bin": {
+    "tripwire": "bin/tripwire.js"
+  },
+  "dependencies": {
+    "ethers": "^6.13.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomcode1000/tripwire-qie.git"
   }
 }
