@@ -1,0 +1,16 @@
+{
+  "network": "qieTestnet",
+  "ranAt": "2026-11-28",
+  "what": "End-to-end run of the Tripwire CLI (npx github:tomcode1000/tripwire-qie) on QIE testnet: vault, bait, arm, status, check",
+  "vault": { "address": "0x86D9eE5AC44951110eDB27Ed3e454ebA0b9C1557", "tx": "0x2b10aeab8a6234648f3f3c76facc9fac9cb6db4a2d57ce2dd50f921e04fe218e", "delayHours": 24 },
+  "baits": [
+    { "address": "0xA6f55B89c8282d0899f14999F29FcF63805970F2", "label": "github:cli-demo/.env" },
+    { "address": "0x6405C4eb05dF20f0BC1b3ca7395ef7621944379a", "label": "notes:cli-demo.txt" }
+  ],
+  "arm": { "trap": "0x3eEf2ae30277763406aC73EAF6570f939E07324c", "tx": "0x67a2ce3e9312c07bad6e1fceacc69509ea6090064006ba536c2afa6716f4ba0d", "guardianTx": "0xf6f44a4b2ef86af0d64a07e88291e788e64a78dda2e285ca0936e9a291b7a7ba" },
+  "status": { "trapCanLockVault": true, "catches": 0, "vaultLocked": false },
+  "check": [
+    { "address": "0xEA5C13eA7e695D52c0976A451fB2085d8df38aC7", "result": "BLOCKLISTED", "exitCode": 2 },
+    { "address": "0x000000000000000000000000000000000000dEaD", "result": "not blocklisted", "exitCode": 0 }
+  ]
+}
